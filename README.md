@@ -8,4 +8,6 @@ Regras
 1. Somente commitar versões funcionais do projeto.
 2. Ao Commitar comentar informando todas as modificações e implementações realizadas.
 
-===> Code 4Fun (S2).
+The Package Team
+====
+Code 4Love (S2)
