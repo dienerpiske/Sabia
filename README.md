@@ -7,4 +7,5 @@ Regras
 ====
 1. Somente commitar versões funcionais do projeto.
 2. Ao Commitar comentar informando todas as modificações e implementações realizadas.
-3. Code 4Fun (S2).
+
+===> Code 4Fun (S2).
