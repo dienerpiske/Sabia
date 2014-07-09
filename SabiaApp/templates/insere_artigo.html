@@ -1,0 +1,30 @@
+{% include "header.html "%}
+{% load staticfiles %}
+
+	<div class="container">
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<div class="panel panel-default top-margin-low1" >
+					<form action="/registra_novo/" method="POST"> 
+						{% csrf_token %}	
+						
+						<div class="panel-heading"><i class="fa fa-search"></i>  
+							Título: <input type="text" name="formTitulo" class="form-control" placeholder="Insira o Título...">
+						</div>
+						
+						<div class="panel-body">						
+							<textarea name="formArtigo" rows="3" id="tbxTextoSolicitacao" class="form-control" style="height:500px;width:100%;"></textarea>	<br>	
+							<button type="submit" class="btn btn-default btn-sm">
+								<span class="glyphicon glyphicon-folder-close"></span> Salvar Tudo
+							</button>
+						</div>
+					</form>	
+				</div>								
+			</div>						
+		</div>	
+	</div>
+			
+	
+{% include "footer.html "%}
+
+
