@@ -11,14 +11,18 @@ class FichamentoModelForm(ModelForm):
         model = Fichamento
         
 def inicio(request):  
-    return render_to_response('index.html')
+    return render_to_response('inicio.html')
 
-def main_page(request):  
-    return render_to_response('main_page.html')
+def home(request):  
+    return render_to_response('meu_sabia.html')
 
 def novo_fichamento(request, id_artigo):
     artigo = Artigo.objects.get(id = id_artigo)
     return render_to_response('novo_fichamento.html',{'artigo' : artigo})
+
+def mostra_artigo(request, id_artigo):
+    artigo = Artigo.objects.get(id = id_artigo)
+    return render_to_response('mostra_artigo.html',{'artigo' : artigo})
 
 @csrf_exempt 
 def salvar_questao(request):
@@ -41,10 +45,10 @@ def registra_novo(request):
     if request.POST:        
         artigo = Artigo()
         artigo.texto_artigo = request.POST['formArtigo']
-        artigo.titulo_artigo = request.POST['formTitulo']             
+        artigo.titulo_artigo = request.POST['formTitulo']          
         artigo.save()       
             
-        return HttpResponseRedirect(reverse('SabiaApp.views.novo_fichamento', args=[artigo.id]))
+        return HttpResponseRedirect(reverse('SabiaApp.views.mostra_artigo', args=[artigo.id]))
 
-def insere_artigo(request):
-    return render_to_response('insere_artigo.html')
+def novo_artigo(request):
+    return render_to_response('novo_artigo.html')

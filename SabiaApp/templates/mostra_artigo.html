@@ -1,0 +1,112 @@
+{% include "header.html "%}
+{% load staticfiles %}
+
+	<div class="container">
+		<div class="row clearfix">
+			<div class="col-md-8 column">
+				<div class="panel panel-default top-margin-low1" >
+					<div class="panel-heading"><i class="fa fa-search"></i>  
+						Título&nbsp;&nbsp;: 
+						{% if artigo %} 
+							{{artigo.titulo_artigo}} 
+						{% endif %} 
+					</div>
+					<div class="panel-body">						
+						<p align="justify"> 
+							{% if artigo %} 
+								{{artigo.texto_artigo}} 
+							{% endif %} 
+						</p>						
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-4 column">			
+				<button class="btn btn-default btn-sm" role="button" href="#modal-container-297988" id="modal-297988" data-toggle="modal">
+					<span class="glyphicon glyphicon-plus-sign"></span> Questões Fichamento
+				</button>
+											
+				<button type="submit" class="btn btn-default btn-sm">
+					<span class="glyphicon glyphicon-cloud-download"></span> Salvar Tudo
+				</button>	
+
+				<div class="container">
+					<div class="row clearfix">
+						<div class="col-md-12 column">
+							<ul class="pagination">
+								<li>
+									<a href="#1">Prev</a>
+								</li>
+								<li>
+									<a href="#">1</a>
+								</li>
+								<li>
+									<a href="#">2</a>
+								</li>
+								<li>
+									<a href="#">3</a>
+								</li>
+								<li>
+									<a href="#">4</a>
+								</li>
+								<li>
+									<a href="#">5</a>
+								</li>
+								<li>
+									<a href="#">Next</a>
+								</li>
+							</ul>
+							<div class="list-group">
+								 <a href="#" class="list-group-item active">Home</a>
+								<div class="list-group-item">
+									List header
+								</div>
+								<div class="list-group-item">
+									<h4 class="list-group-item-heading">
+										List group item heading
+									</h4>
+									<p class="list-group-item-text">
+										...
+									</p>
+								</div>
+								<div class="list-group-item">
+									<span class="badge">14</span>Help
+								</div> <a class="list-group-item active"><span class="badge">14</span>Help</a>
+							</div>
+						</div>
+					</div>
+				</div>				
+			</div>		
+				
+			<div class="modal fade" id="modal-container-297988" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<h4 class="modal-title" id="myModalLabel">
+								Questões de Fichamento
+							</h4>
+						</div>
+						<div class="modal-body">
+							<form role="form" method="POST" action="/salvar_questao/">	
+								{% csrf_token %}								
+								<input type="text" class="form-control" placeholder="Insira a questão..." name="formQuestao">	
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Fechar</button> 
+									<input type="hidden" name="idOculto" value={{artigo.id}} >
+									<button type="submit" class="btn btn-primary btn-sm">Salvar</button>											
+								</div>
+							</form>
+						</div>						
+					</div>						
+				</div>					
+			</div>		
+		</div>	
+	</div>
+	
+
+		
+	
+{% include "footer.html "%}
+
+

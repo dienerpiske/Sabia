@@ -1,0 +1,41 @@
+{% include "header_inicio.html"%}
+
+    <div class="container">
+      <div class="jumbotron">
+        <h1>Ola!</h1>
+        <p>
+			O sistema proposto e um ambiente cooperativo multiagentes que auxilia na
+			tarefa de pesquisar artigos relevantes, realizar a leitura, destacar trechos importantes e anotar percepcoes
+			importantes, isto e, fazer o trabalho de fichamento de diversos artigos de pesquisa.
+		</p>        
+        <p>
+          <a id="modal-297988" href="#modal-container-297988" role="button" class="btn btn-primary btn-large" data-toggle="modal">Fazer Login</a>
+        </p>
+      </div>
+    </div>
+		
+	<div class="modal fade" id="modal-container-297988" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+					<h4 class="modal-title" id="myModalLabel">
+						Login
+					</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-signin" role="form" method="GET" action="/main_page/">
+						<h2 class="form-signin-heading">Acessar Sistema</h2>
+						<input type="email" class="form-control" placeholder="Email address" required autofocus><br>
+						<input type="password" class="form-control" placeholder="Password" required>		
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button> <button type="submit" class="btn btn-primary">Entrar</button>
+						</div>
+					</form>
+				</div>
+				
+			</div>						
+		</div>					
+	</div>	
+
+{% include "footer.html "%}
