@@ -45,7 +45,8 @@ def registra_novo(request):
     if request.POST:        
         artigo = Artigo()
         artigo.texto_artigo = request.POST['formArtigo']
-        artigo.titulo_artigo = request.POST['formTitulo']          
+        artigo.titulo_artigo = request.POST['formTitulo']  
+        artigo.tags_artigo = request.POST['formTags']          
         artigo.save()       
             
         return HttpResponseRedirect(reverse('SabiaApp.views.mostra_artigo', args=[artigo.id]))
