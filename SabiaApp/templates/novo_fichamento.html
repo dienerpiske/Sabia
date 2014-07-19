@@ -1,15 +1,60 @@
 {% include "header.html "%}
 {% load staticfiles %}
+
+<script language=javascript>
+/* function getSelText()
+{
+	document.aform.selectedtext.value =  "1";
+    var txt = '';
+    if (window.getSelection) {
+        txt = window.getSelection();
+     } else if (document.getSelection)
+    {
+        txt = document.getSelection();
+            }
+    else if (document.selection)
+    {
+        txt = document.selection.createRange().text;
+            }
+    else return;
+document.aform.selectedtext.value =  txt;
+} */
+
+function getMarcacao() {
+    var text = "", containerElement = null;
+    if (typeof window.getSelection != "undefined") {
+        var sel = window.getSelection();
+        if (sel.rangeCount) {
+            var node = sel.getRangeAt(0).commonAncestorContainer;
+            containerElement = node.nodeType == 1 ? node : node.parentNode;
+            text = sel.toString();
+        }
+    } else if (typeof document.selection != "undefined" &&
+               document.selection.type != "Control") {
+        var textRange = document.selection.createRange();
+        containerElement = textRange.parentElement();
+        text = textRange.text;
+    }
+    if(containerElement.id == "artigocorpo"){
+    	var texto = document.getElementById("marc_texto");
+    	texto.value += text;
+    }
+
+}
+</script>
+
+
+
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="container">
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-xs-6 col-lg-6">
           <div class="panel-heading">
-            <a class="btn pull-right btn-success btn-xs"><i class="fa fa-plus-circle">&nbsp;Marcar</i></a><a></a><i class="fa fa-search"></i> T&Atilde;&shy;tulo&nbsp;&nbsp;: {% if artigo %} {{artigo.titulo_artigo}} {% endif %}
+            <a class="btn pull-right btn-success btn-xs" onmousedown="getMarcacao()"><i class="fa fa-plus-circle">&nbsp;Marcar</i></a><a></a><i class="fa fa-search"></i> T&Atilde;&shy;tulo&nbsp;&nbsp;: {% if artigo %} {{artigo.titulo_artigo}} {% endif %}
           </div>
-          <div class="panel-body">
-            <p align="justify" style>{% if artigo %} {{artigo.texto_artigo}} {% endif %}</p>
+          <div id="artigocorpo" class="panel-body">
+            {% if artigo %} {{artigo.texto_artigo}} {% endif %}
           </div>
           <div class="list-group">
             <a href="#" class="list-group-item active">Outros Artigos</a>
@@ -58,7 +103,7 @@
               <input type="text" class="form-control">
             </div>
             <label class="control-label">Conteudo</label>
-            <textarea class="form-control"></textarea>
+            <textarea id="marc_texto" class="form-control"></textarea>
             <a class="btn btn-primary">Adicionar</a>
           </div>
           
