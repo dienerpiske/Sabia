@@ -2,6 +2,52 @@
 {% load staticfiles %}
 
 <script language=javascript>
+
+var xMousePosition = 0;
+var yMousePosition = 0;
+ 
+ 
+document.onmousemove = function(e)
+{
+  xMousePosition = e.clientX + window.pageXOffset;
+  yMousePosition = e.clientY + window.pageYOffset;
+};
+ 
+ 
+function marcar(element,t)
+{
+
+	var texto = document.getElementById("marc_texto");
+	texto.value += t;
+	
+}
+ 
+function mymenu(element)
+{
+	var t = getMarcacao();
+  var x = document.getElementById('ctxmenu1');
+  if(x) x.parentNode.removeChild(x);
+ 
+  var d = document.createElement('div');
+  d.setAttribute('class', 'ctxmenu');
+  d.setAttribute('id', 'ctxmenu1');
+  element.parentNode.appendChild(d);
+  d.style.left = xMousePosition + "px";
+  d.style.top = yMousePosition + "px";
+  d.onmouseover = function(e) { this.style.cursor = 'pointer'; }
+  d.onclick = function(e) { element.parentNode.removeChild(d);  }
+  document.body.onclick = function(e) { element.parentNode.removeChild(d);  }
+ 
+  var p = document.createElement('p');
+  d.appendChild(p);
+  p.onclick=function() { marcar(element, t) };
+  p.setAttribute('class', 'ctxline');
+  p.innerHTML = "Marcar";
+ 
+  
+ 
+  return false;
+}
 /* function getSelText()
 {
 	document.aform.selectedtext.value =  "1";
@@ -36,8 +82,9 @@ function getMarcacao() {
         text = textRange.text;
     }
     if(containerElement.id == "artigocorpo"){
-    	var texto = document.getElementById("marc_texto");
-    	texto.value += text;
+    	return text;
+    } else {
+    	return "";
     }
 
 }
@@ -53,7 +100,7 @@ function getMarcacao() {
           <div class="panel-heading">
             <a class="btn pull-right btn-success btn-xs" onmousedown="getMarcacao()"><i class="fa fa-plus-circle">&nbsp;Marcar</i></a><a></a><i class="fa fa-search"></i> T&Atilde;&shy;tulo&nbsp;&nbsp;: {% if artigo %} {{artigo.titulo_artigo}} {% endif %}
           </div>
-          <div id="artigocorpo" class="panel-body">
+          <div id="artigocorpo" class="panel-body" oncontextmenu="return mymenu(this)">
             {% if artigo %} {{artigo.texto_artigo}} {% endif %}
           </div>
           <div class="list-group">
