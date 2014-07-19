@@ -2,70 +2,10 @@
 {% load staticfiles %}
 
 <script language=javascript>
-
-var xMousePosition = 0;
-var yMousePosition = 0;
- 
- 
-document.onmousemove = function(e)
-{
-  xMousePosition = e.clientX + window.pageXOffset - 100;
-  yMousePosition = e.clientY + window.pageYOffset - 50;
-};
- 
- 
-function marcar(element,t)
-{
-
+function doMarcar(){
 	var texto = document.getElementById("marc_texto");
-	texto.value += t;
-	
+	texto.value += " " + getMarcacao();
 }
- 
-function mymenu(element)
-{
-	var t = getMarcacao();
-  var x = document.getElementById('ctxmenu1');
-  if(x) x.parentNode.removeChild(x);
- 
-  var d = document.createElement('div');
-  d.setAttribute('class', 'ctxmenu');
-  d.setAttribute('id', 'ctxmenu1');
-  element.parentNode.appendChild(d);
-  d.style.left = xMousePosition + "px";
-  d.style.top = yMousePosition + "px";
-  d.onmouseover = function(e) { this.style.cursor = 'pointer'; }
-  d.onclick = function(e) { element.parentNode.removeChild(d);  }
-  document.body.onclick = function(e) { element.parentNode.removeChild(d);  }
- 
-  var p = document.createElement('p');
-  d.appendChild(p);
-  p.onclick=function() { marcar(element,t) };
-  p.setAttribute('class', 'ctxline');
-  p.innerHTML = "Marcar";
- 
-  
- 
-  return false;
-}
-/* function getSelText()
-{
-	document.aform.selectedtext.value =  "1";
-    var txt = '';
-    if (window.getSelection) {
-        txt = window.getSelection();
-     } else if (document.getSelection)
-    {
-        txt = document.getSelection();
-            }
-    else if (document.selection)
-    {
-        txt = document.selection.createRange().text;
-            }
-    else return;
-document.aform.selectedtext.value =  txt;
-} */
-
 function getMarcacao() {
     var text = "", containerElement = null;
     if (typeof window.getSelection != "undefined") {
@@ -86,7 +26,6 @@ function getMarcacao() {
     } else {
     	return "";
     }
-
 }
 </script>
 
@@ -100,7 +39,13 @@ function getMarcacao() {
           <div class="panel-heading">
             <a class="btn pull-right btn-success btn-xs" onmousedown="getMarcacao()"><i class="fa fa-plus-circle">&nbsp;Marcar</i></a><a></a><i class="fa fa-search"></i> T&Atilde;&shy;tulo&nbsp;&nbsp;: {% if artigo %} {{artigo.titulo_artigo}} {% endif %}
           </div>
-          <div id="artigocorpo" class="panel-body" oncontextmenu="return mymenu(this)">
+          <div id="artigocorpo" class="panel-body jumbotron" contextmenu="menu">
+            <!-- Create the menu -->
+<menu type="context" id="menu">
+    <menuitem label="Marcar" onclick="doMarcar()"></menuitem>
+    <menuitem label="Digg This Page" onclick="window.location='http://digg.com/submit?url='+window.location;" icon="digg.png"></menuitem>
+    <menuitem label="Email This Page" onclick="window.location='mailto:?body='+window.location;"></menuitem>
+</menu>
             {% if artigo %} {{artigo.texto_artigo}} {% endif %}
           </div>
           <div class="list-group">
