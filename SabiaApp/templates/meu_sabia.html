@@ -1,16 +1,62 @@
 {% include "header.html "%}
 {% load staticfiles %}
 
+    
+    
+    
+    <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="container">
-      <div class="jumbotron">
-        <h1>SABIA...</h1>  
-			<form action="/novo_artigo/" method="get"> 
-				<button type="submit" class="btn btn-default btn-sm">
-					<span class="glyphicon glyphicon-plus-sign"></span> Adicionar Novo Artigo
-				</button>
-			</form>
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-xs-3 col-lg-4" align="center">
+          <img src="http://t1.gstatic.com/images?q=tbn:ANd9GcTa1zup2CmrAcqWpe29tto-pHdN6yeohUsghKJkscjMNz61-pdSCA" class="img-circle" width="150">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Diener Piske</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Mestre em Inform&aacute;tica</td>
+              </tr>
+              <tr>
+                <td>Lattes: Clique aqui</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.</p>
+          <p style></p>
+        </div>
+        <div class="col-xs-4 col-lg-4">
+          <h3>Meus Fichamentos</h3>
+          <ul class="list-group">
+            <li class="list-group-item">First Item</li>
+            <li class="list-group-item">Second Item</li>
+            <li class="list-group-item">Third Item</li>
+          </ul>
+          <p><a class="btn btn-default" href="#">Ver todos...</a></p>
+        </div>
+        <div class="col-xs-5 col-lg-4">
+          <h3>Artigos</h3>
+          <input type="text" class="form-control" placeholder="buscar...">
+          <a class="btn btn-default btn-block" href="#">Novo Artigo</a>
+          <ul class="list-group">
+            <li class="list-group-item">First Item</li>
+            <li class="list-group-item">Second Item</li>
+            <li class="list-group-item">Third Item</li>
+          </ul>
+          <p></p>
+        </div>
       </div>
-    </div> 
+      
+    </div>
+    
+    
+    
+    
+    
+    
 
 	
 {% include "footer.html "%}
