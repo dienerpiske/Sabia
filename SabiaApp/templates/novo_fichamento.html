@@ -9,8 +9,8 @@ var yMousePosition = 0;
  
 document.onmousemove = function(e)
 {
-  xMousePosition = e.clientX + window.pageXOffset;
-  yMousePosition = e.clientY + window.pageYOffset;
+  xMousePosition = e.clientX + window.pageXOffset - 100;
+  yMousePosition = e.clientY + window.pageYOffset - 50;
 };
  
  
@@ -40,7 +40,7 @@ function mymenu(element)
  
   var p = document.createElement('p');
   d.appendChild(p);
-  p.onclick=function() { marcar(element, t) };
+  p.onclick=function() { marcar(element,t) };
   p.setAttribute('class', 'ctxline');
   p.innerHTML = "Marcar";
  
