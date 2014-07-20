@@ -1,15 +1,16 @@
 from django.forms import ModelForm
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, render
 from SabiaApp.models import *
 from django.core.context_processors import csrf
 from django.views.decorators.csrf import csrf_exempt
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
+from django.contrib.auth.forms import UserCreationForm # Formulario de criacao de usuarios
 
 class FichamentoModelForm(ModelForm):
     class Meta:
         model = Fichamento
-        
+
 def inicio(request):  
     return render_to_response('inicio.html')
 

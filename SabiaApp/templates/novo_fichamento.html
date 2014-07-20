@@ -3,6 +3,10 @@
 
 <script language=javascript>
 
+function testeajax(data){
+	alert(data.message);
+}
+
 var xMousePosition = 0;
 var yMousePosition = 0;
  
@@ -151,7 +155,7 @@ function getMarcacao() {
             </div>
             <label class="control-label">Conteudo</label>
             <textarea id="marc_texto" class="form-control"></textarea>
-            <a class="btn btn-primary">Adicionar</a>
+            <a class="btn btn-primary" onclick="Dajaxice.SabiaApp.sayhello(testeajax);">Adicionar</a>
           </div>
           
       </div>
