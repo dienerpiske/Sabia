@@ -7,30 +7,34 @@ function testeajax(data){
 	alert(data.message);
 }
 
+function mudatextoartigo(data){
+	document.getElementById('artigocorpo').textContent  = data.texto;
+}
+
+function traduz_en_pt(e){
+	Dajaxice.SabiaApp.traduzir(mudatextoartigo,{'texto':document.getElementById('artigocorpo').textContent , 'de' : 'pt', 'para' : 'en'});
+}
+
 var xMousePosition = 0;
 var yMousePosition = 0;
  
  
-document.onmousemove = function(e)
-{
+document.onmousemove = function(e){
   xMousePosition = e.clientX + window.pageXOffset - 100;
   yMousePosition = e.clientY + window.pageYOffset - 50;
 };
  
  
-function marcar(t)
-{
+function marcar(t){
 var texto = document.getElementById("marc_texto");
 texto.value += t;
-
 }
 
 function doMarcar(){
 	marcar(getMarcacao())
 }
  
-function mymenu(element)
-{
+function mymenu(element){
 var t = getMarcacao();
   var x = document.getElementById('ctxmenu1');
   if(x) x.parentNode.removeChild(x);
@@ -50,28 +54,8 @@ var t = getMarcacao();
   p.onclick=function() { marcar(t) };
   p.setAttribute('class', 'ctxline');
   p.innerHTML = "Marcar";
- 
-  
- 
   return false;
 }
-/* function getSelText()
-{
-document.aform.selectedtext.value = "1";
-var txt = '';
-if (window.getSelection) {
-txt = window.getSelection();
-} else if (document.getSelection)
-{
-txt = document.getSelection();
-}
-else if (document.selection)
-{
-txt = document.selection.createRange().text;
-}
-else return;
-document.aform.selectedtext.value = txt;
-} */
 
 function getMarcacao() {
     var text = "", containerElement = null;
@@ -105,11 +89,10 @@ function getMarcacao() {
       <div class="row">
         <div class="col-xs-6 col-lg-6">
           <div class="panel-heading">
-            <a class="btn pull-right btn-success btn-xs" onmousedown="doMarcar()"><i class="fa fa-plus-circle">&nbsp;Marcar</i></a><a></a><i class="fa fa-search"></i> Titulo&nbsp;&nbsp;: {% if artigo %} {{artigo.titulo_artigo}} {% endif %}
+          <a class="btn pull-right btn-success btn-xs" onmousedown="traduz_en_pt()"><i class="fa fa-plus-circle">&nbsp;Traduzir</i></a><a></a><i class="fa fa-search"></i>
+            <a class="btn pull-right btn-success btn-xs" onmousedown="doMarcar()"><i class="fa fa-plus-circle">&nbsp;Marcar</i></a><a></a><i class="fa fa-search"></i>Titulo&nbsp;&nbsp;: {% if artigo %} {{artigo.titulo_artigo}} {% endif %}
           </div>
-          <div id="artigocorpo" class="panel-body jumbotron" oncontextmenu="return mymenu(this)">
-            {% if artigo %} {{artigo.texto_artigo}} {% endif %}
-          </div>
+          <div style="height:400px;line-height:3em;overflow:auto;padding:5px;" id="artigocorpo" class="panel-body jumbotron" oncontextmenu="return mymenu(this)">{% if artigo %} {{artigo.texto_artigo}} {% endif %}</div>
           <div class="list-group">
             <a href="#" class="list-group-item active">Outros Artigos</a>
             {% for art in artigo.getArtSemelhantes %}
@@ -156,6 +139,9 @@ function getMarcacao() {
             </div>
             <label class="control-label">Conteudo</label>
             <textarea id="marc_texto" class="form-control"></textarea>
+            
+            
+            <a class="btn btn-primary" onclick="traduz_en_pt()">Adicionar</a>
             <a class="btn btn-primary" onclick="Dajaxice.SabiaApp.sayhello(testeajax);">Adicionar</a>
           </div>
           
