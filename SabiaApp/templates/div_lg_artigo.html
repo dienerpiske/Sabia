@@ -1,0 +1,8 @@
+		<div id="lgartigo" class="list-group">
+            <a href="#" class="list-group-item active">Artigos</a>
+           {% for art in artigos %}
+            <div id="liartigo" class="list-group-item">{{art.titulo_artigo}}<a class="btn pull-right btn-default btn-xs" href="/sabia/artigo/{{art.id}}/"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
+            </div>
+            {% endfor %}
+            <a class="list-group-item active"></a>
+          </div>

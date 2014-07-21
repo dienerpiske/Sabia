@@ -17,6 +17,9 @@ class Artigo(models.Model):
     
     class Meta:
         db_table = 'Artigo'
+        
+    def getArtSemelhantes(self):
+        return Artigo.objects.all() #mudar isso usando o comparados por tag
 
 class Fichamento(models.Model):
     titulo_fichamento = models.TextField()
@@ -29,6 +32,9 @@ class Fichamento(models.Model):
         
     def __unicode__(self):
         return self.titulo_fichamento
+    
+    def getResumo(self):
+        return "Conteudo de :" + self.titulo_fichamento
 
 class Marcacao(models.Model):
     titulo_marcacao = models.TextField()

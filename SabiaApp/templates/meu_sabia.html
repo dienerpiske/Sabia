@@ -1,7 +1,61 @@
 {% include "header.html "%}
 {% load staticfiles %}
 
+    <script language=javascript>
+    function buscarFichamento(e){
+    	if (e.keyCode == 13) {
+    		Dajaxice.SabiaApp.searchfichamentos(atualizaFichamentos,{'busca':document.getElementById('buscafichamentos').value});
+    	}
+    }
     
+    function buscarArtigo(e){
+    	if (e.keyCode == 13) {
+    		Dajaxice.SabiaApp.searchartigos(atualizaArtigos,{'busca':document.getElementById('buscaartigos').value});
+    	}
+    }
+    
+    function atualizaFichamentos(data){
+        if(data!=Dajaxice.EXCEPTION){
+            document.getElementById('divfichamento').innerHTML = data.listgroup;
+        }
+        else{
+            alert('Error');
+        }
+    }
+
+    function atualizaArtigos(data){
+        if(data!=Dajaxice.EXCEPTION){
+            document.getElementById('divartigo').innerHTML = data.listgroup;
+        }
+        else{
+            alert('Error');
+        }
+    }
+    
+    function removeFichamentos(){
+    	do{
+        	var element = document.getElementById("lifichamento");
+        	element.parentNode.removeChild(element)
+        }while(element != null){}
+    }
+    
+    function removeArtigos(){
+    	do{
+        	var element = document.getElementById("liartigo");
+        	element.parentNode.removeChild(element)
+        }while(element != null){}
+    }
+    
+    function atualizarArtigos(data){
+    	document.getElementById("buscaartigos").value
+    	alert("Artigos atualizados");
+    }
+    
+    function atualizarFichamentos(data){
+    	alert("Fichamentos atualizados");
+    }
+    
+    </script>
     
     
     <!-- Main jumbotron for a primary marketing message or call to action -->
@@ -21,7 +75,8 @@
                 <td>Mestre em Inform&aacute;tica</td>
               </tr>
               <tr>
-                <td>Lattes: Clique aqui</td>
+                <td>Lattes: <a>Clique aqui</a></td>
+                
               </tr>
             </tbody>
           </table>
@@ -29,34 +84,34 @@
           <p style></p>
         </div>
         <div class="col-xs-4 col-lg-4">
-          <div class="list-group">
-            <a href="#" class="list-group-item active">Meus Fichamentos:</a><input type="text" class="form-control" placeholder="buscar...">
-            <div class="list-group-item">Artigo 1<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
+        <input id="buscafichamentos" type="text" class="form-control" placeholder="buscar..." onkeypress="buscarFichamento(event)">
+        <div id="divfichamento">
+          <div id="lgfichamento" class="list-group">
+            <a href="#" class="list-group-item active">Meus Fichamentos:</a>
+            {% for fic in fichamentos %}
+            <div id="lifichamento" class="list-group-item">{{fic.titulo_fichamento}}<a class="btn pull-right btn-default btn-xs" href="/sabia/fichamento/{{fic.id}}/"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
             </div>
-            <div class="list-group-item">Artigo 2<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
-            <div class="list-group-item">Artigo 3<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
+            {% endfor %}
             <a class="list-group-item active"></a>
           </div>
-          
+          </div>
           
          
         </div>
+        
         <div class="col-xs-5 col-lg-4">
-          <div class="list-group">
-            <a href="#" class="list-group-item active">Artigos</a><input type="text" class="form-control" placeholder="buscar...">
-           
-            <div class="list-group-item">Artigo 1<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
+        <input id="buscaartigos" type="text" class="form-control" placeholder="buscar..." onkeypress="buscarArtigo(event)">
+        <div id="divartigo">
+        
+          <div id="lgartigo" class="list-group">
+            <a href="#" class="list-group-item active">Artigos</a>
+           {% for art in artigos %}
+            <div id="liartigo" class="list-group-item">{{art.titulo_artigo}}<a class="btn pull-right btn-default btn-xs" href="/sabia/artigo/{{art.id}}/"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
             </div>
-            <div class="list-group-item">Artigo 2<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
-            <div class="list-group-item">Artigo 3<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
+            {% endfor %}
             <a class="list-group-item active"></a>
           </div>
-        
-        
+          </div>
         </div>
     </div>
     

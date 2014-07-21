@@ -14,12 +14,26 @@ class FichamentoModelForm(ModelForm):
 def inicio(request):  
     return render_to_response('inicio.html')
 
-def home(request):  
-    return render_to_response('meu_sabia.html')
+def home(request):
+    artigos = Artigo.objects.all()
+    fichamentos = Fichamento.objects.all()
+    return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos})
+
+def editar_fichamento(request, id_artigo, id_fichamento):
+    fichamento = Fichamento.objects.get(id = id_fichamento)
+    return render_to_response('novo_fichamento.html',{'fichamento' : fichamento, 'artigo' : fichamento.artigo})
 
 def novo_fichamento(request, id_artigo):
-    artigo = Artigo.objects.get(id = id_artigo)
-    return render_to_response('novo_fichamento.html',{'artigo' : artigo})
+    id_fichamento = 1 # criar novo fichamento e passar o id
+    return editar_fichamento(request, id_artigo, id_fichamento)
+
+def mostra_fichamento(request, id_fichamento):
+    fichamento = Fichamento.objects.get(id = id_fichamento)
+    artigo = fichamento.artigo
+    return mostra_artigo_fichamento(request, artigo, fichamento)
+
+def mostra_artigo_fichamento(request, artigo, fichamento):
+    return render_to_response('mostra_artigo.html',{'artigo' : artigo, 'fichamento' : fichamento})
 
 def mostra_artigo(request, id_artigo):
     artigo = Artigo.objects.get(id = id_artigo)
