@@ -79,6 +79,18 @@ var texto = document.getElementById("marc_texto");
 texto.value += t;
 }
 
+function marcar(t,id){
+	var texto = document.getElementById("marc_texto");
+	var btn = document.getElementById("btn_marc_"+id);
+
+	if (typeof btn.onclick == "function") {
+		btn.onclick.apply(btn);
+	}
+
+	texto.value += t;
+	salva_marcacao();
+}
+
 function doMarcar(){
 	marcar(getMarcacao())
 }
