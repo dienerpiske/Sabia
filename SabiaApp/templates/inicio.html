@@ -25,10 +25,11 @@
 					</h4>
 				</div>
 				<div class="modal-body">
-					<form class="form-signin" role="form" method="GET" action="/sabia/home/">
+					<form class="form-signin" role="form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+						{% csrf_token %}
 						<h2 class="form-signin-heading">Acessar Sistema</h2>
-						<input type="email" class="form-control" placeholder="Email address" required autofocus><br>
-						<input type="password" class="form-control" placeholder="Password" required>		
+						<input type="login" class="form-control" placeholder="Username" name="nomeUsuario" required autofocus><br>
+						<input type="password" class="form-control" placeholder="Password" name="senhaUsuario" required>		
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button> <button type="submit" class="btn btn-primary">Entrar</button>
 						</div>

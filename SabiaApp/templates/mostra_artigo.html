@@ -19,7 +19,7 @@ function traduz_en_pt(e){
         <div class="col-xs-6 col-lg-6">
           <div class="panel-heading">
           <a class="btn pull-right btn-success btn-xs" onmousedown="traduz_en_pt()"><i class="fa fa-plus-circle">&nbsp;Traduzir</i></a><a></a><i class="fa fa-search"></i>
-            <a class="btn pull-right btn-success btn-xs" href="/sabia/artigo/{{artigo.id}}/fichar/"><i class="fa fa-plus-circle"></i><font face="FontAwesome"><span style="line-height: 12px;">&nbsp;Fichar</span></font></a><a></a><i class="fa fa-search"></i> T&Atilde;&shy;tulo&nbsp;&nbsp;: {% if artigo %} {{artigo.titulo_artigo}} {% endif %}
+            <a class="btn pull-right btn-success btn-xs" href="/sabia/artigo/{{artigo.id}}/fichar/"><i class="fa fa-plus-circle"></i><font face="FontAwesome"><span style="line-height: 12px;">&nbsp;Fichar</span></font></a><a></a><i class="fa fa-search"></i> Título&nbsp;&nbsp;: {% if artigo %} {{artigo.titulo_artigo}} {% endif %}
           </div>
           <div style="height:400px;line-height:3em;overflow:auto;padding:5px;" id="artigocorpo" class="panel-body jumbotron" oncontextmenu="return mymenu(this)">{% if artigo %} {{artigo.texto_artigo}} {% endif %}</div>
           <div class="list-group">
@@ -33,7 +33,7 @@ function traduz_en_pt(e){
         </div>
         <div class="col-xs-6 col-lg-6">
           <div class="panel-heading">
-            <a class="btn pull-right btn-success btn-xs"><i class="fa fa-thumbs-o-up">&nbsp;</i>Gostei</a><i class="fa fa-search"></i> T&Atilde;&shy;tulo&nbsp;&nbsp;: {% if fichamento %} {{fichamento.titulo_fichamento}} {% endif %}
+            <a class="btn pull-right btn-success btn-xs"><i class="fa fa-thumbs-o-up">&nbsp;</i>Gostei</a><i class="fa fa-search"></i> Título&nbsp;&nbsp;: {% if fichamento %} {{fichamento.titulo_fichamento}} {% endif %}
           </div>
           <div class="panel-body jumbotron">
             {% if fichamento %} {{fichamento.getResumo}} {% endif %}

@@ -2,10 +2,13 @@ from django.forms import ModelForm
 from django.shortcuts import render_to_response, render
 from SabiaApp.models import *
 from django.core.context_processors import csrf
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import *
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm # Formulario de criacao de usuarios
+from django.contrib.auth import authenticate, logout, login as authlogin 
+from django.template import Context, loader, RequestContext
+from django.http import HttpResponse
 
 class FichamentoModelForm(ModelForm):
     class Meta:
@@ -14,11 +17,27 @@ class FichamentoModelForm(ModelForm):
 def inicio(request):  
     return render_to_response('inicio.html')
 
+@csrf_exempt 
 def home(request):
-    artigos = Artigo.objects.all()
-    fichamentos = Fichamento.objects.all()
-    return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos})
-
+    #if request.user.id:
+	    #return HttpResponse("Voce ja esta logado")
+    
+    if request.POST:
+        usuario = request.POST['nomeUsuario']
+        senha = request.POST['senhaUsuario']
+        
+        u = authenticate(username=usuario, password=senha)
+        
+        if u is not None:
+                        
+            artigos = Artigo.objects.all()
+            fichamentos = Fichamento.objects.all()
+            
+            return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos},context_instance=RequestContext(request,{}))
+        else:
+            return HttpResponse("Voce nao esta logado")
+        
+    #return HttpResponse("Faca login")
 def editar_fichamento(request, id_fichamento):
     fichamento = Fichamento.objects.get(id = id_fichamento)
     return render_to_response('novo_fichamento.html',{'fichamento' : fichamento, 'artigo' : fichamento.artigo})
