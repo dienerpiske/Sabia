@@ -7,6 +7,14 @@ function testeajax(data){
 	alert(data.message);
 }
 
+function carregarmarcacoes(){
+	
+}
+
+function salva_marcacao(){
+	Dajaxice.SabiaApp.salvarmarcacao(carregarmarcacoes,{'texto':document.getElementById('artigocorpo').text
+}
+
 function mudatextoartigo(data){
 	document.getElementById('artigocorpo').textContent  = data.texto;
 }
@@ -95,11 +103,12 @@ function getMarcacao() {
           <div style="height:400px;line-height:3em;overflow:auto;padding:5px;" id="artigocorpo" class="panel-body jumbotron" oncontextmenu="return mymenu(this)">{% if artigo %} {{artigo.texto_artigo}} {% endif %}</div>
           <div class="list-group">
             <a href="#" class="list-group-item active">Outros Artigos</a>
+            <div class="list-group">
             {% for art in artigo.getArtSemelhantes %}
             <div class="list-group-item">{{art.titulo_artigo}}<a class="btn pull-right btn-danger btn-xs" href="/sabia/artigo/{{art.id}}/"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
             </div>
             {% endfor %}
-            <a class="list-group-item active"></a>
+            </div>
           </div>
         </div>
         <div class="col-xs-6 col-lg-6">
@@ -108,31 +117,15 @@ function getMarcacao() {
           </div>
           <div class="list-group">
             <a href="#" class="list-group-item active">Marca&ccedil;&otilde;es:</a>
-            <div class="list-group-item">Marcacao 1<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
+            <div class="list-group">
+            {% for marcacao in fichamento.marcacao__set.all %}
+            <div id="marcacao{{marcacao.id}}" class="list-group-item">{{marcacao.titulo_marcacao}}<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
             </div>
-            <div class="list-group-item">Marcacao 2<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
+            {% endfor %}
             </div>
-            <div class="list-group-item">Marcacao 3<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
-            <div class="list-group-item">Marcacao 2<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
-            <div class="list-group-item">Marcacao 3<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
-            <div class="list-group-item">Marcacao 2<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
-            <div class="list-group-item">Marcacao 3<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
-            <div class="list-group-item">Marcacao 2<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
-            <div class="list-group-item">Marcacao 3<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
-            <div class="list-group-item">Marcacao 2<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
-            <div class="list-group-item">Marcacao 3<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
-            <a class="list-group-item active"></a>
           </div>
           <div class="form-group">
+            <input type="hidden" id="idmarcacaosalvar" value="">
             <label class="control-label">Assunto</label>
             <div class="controls">
               <input type="text" class="form-control">
@@ -141,8 +134,7 @@ function getMarcacao() {
             <textarea id="marc_texto" class="form-control"></textarea>
             
             
-            <a class="btn btn-primary" onclick="traduz_en_pt()">Adicionar</a>
-            <a class="btn btn-primary" onclick="Dajaxice.SabiaApp.sayhello(testeajax);">Adicionar</a>
+            <a class="btn btn-primary" onclick="salva_marcacao()">Adicionar</a>
           </div>
           
       </div>

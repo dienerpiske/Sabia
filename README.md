@@ -10,10 +10,12 @@ Regras
 
 Prerequisito
 ====
-1. django 1.6.5
-2. django-dajaxice.
-3. detectlanguages
-4. httplib2
+$ pip install
+1. django
+2. django-dajaxice
+3. requests
+4. detectlanguages
+5. httplib2
 
 
 The Package Team

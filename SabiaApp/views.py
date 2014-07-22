@@ -19,13 +19,16 @@ def home(request):
     fichamentos = Fichamento.objects.all()
     return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos})
 
-def editar_fichamento(request, id_artigo, id_fichamento):
+def editar_fichamento(request, id_fichamento):
     fichamento = Fichamento.objects.get(id = id_fichamento)
     return render_to_response('novo_fichamento.html',{'fichamento' : fichamento, 'artigo' : fichamento.artigo})
 
 def novo_fichamento(request, id_artigo):
-    id_fichamento = 1 # criar novo fichamento e passar o id
-    return editar_fichamento(request, id_artigo, id_fichamento)
+    artigo = Artigo.objects.get(id=id_artigo)
+    usuario = Usuario.objects.get(id=1)
+    fichamento = Fichamento(titulo_fichamento=artigo.titulo_artigo, likes_fichamento=0, artigo = artigo, usuario = usuario)
+    fichamento.save()
+    return render_to_response('novo_fichamento.html',{'fichamento' : fichamento, 'artigo' : fichamento.artigo})
 
 def mostra_fichamento(request, id_fichamento):
     fichamento = Fichamento.objects.get(id = id_fichamento)

@@ -1,5 +1,4 @@
 import detectlanguage
-import re
 from django.utils import simplejson
 from dajaxice.decorators import dajaxice_register
 from SabiaApp.models import Artigo
@@ -15,11 +14,9 @@ def sayhello(request):
 @dajaxice_register
 def traduzir(request, texto, de, para):
     detectlanguage.configuration.api_key = "f2d7fc33a7f3cb0b045d83b6a4c36ad9"
-    msg = detectlanguage.simple_detect("Buenos dias senor")
-    #translated_word = re.search("translatedText\":\"(.*)\"", ob.text).group(1)
+    #msg = detectlanguage.simple_detect(texto)
     client = MicrosoftTranslatorClient('sabialiedufes', 'HyJ6rFaIeEPd9q7ZjrWaixrKIUuAXuxIAroGL6YpRl8=')
     t =  client.TranslateText(texto, de, para)
-
     return simplejson.dumps({'texto' : t})
 
 @dajaxice_register
