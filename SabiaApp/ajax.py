@@ -3,9 +3,36 @@ from django.utils import simplejson
 from dajaxice.decorators import dajaxice_register
 from SabiaApp.models import Artigo
 from SabiaApp.models import Fichamento
+from SabiaApp.models import Marcacao
 from django.template.loader import render_to_string
 from SabiaApp.bing import MicrosoftTranslatorClient
 
+@dajaxice_register
+def criarmarcacao(request, id_fichamento,titulo,texto):
+    fichamento = Fichamento.objects.get(id=id_fichamento)
+    marcacao = Marcacao(titulo_marcacao = titulo, texto_marcacao = texto, fichamento = fichamento)
+    marcacao.save()
+    return crialgmarcacao(fichamento)
+
+@dajaxice_register
+def salvarmarcacao(request, id, titulo, texto):
+    marcacao = Marcacao.objects.get(id=id)
+    marcacao.titulo_marcacao = titulo
+    marcacao.texto_marcacao = texto
+    marcacao.save()
+    return crialgmarcacao(marcacao.fichamento)
+
+@dajaxice_register
+def removermarcacao(request, id):
+    marcacao = Marcacao.objects.get(id=id)
+    fichamento = marcacao.fichamento
+    marcacao.delete()
+    return crialgmarcacao(fichamento)
+    
+def crialgmarcacao(fichamento):
+    marcacoes = fichamento.marcacao_set.all()
+    listgroup = render_to_string('div_lg_marcacao.html', {'marcacoes': marcacoes})
+    return simplejson.dumps({'listgroup': listgroup})
 
 @dajaxice_register
 def sayhello(request):

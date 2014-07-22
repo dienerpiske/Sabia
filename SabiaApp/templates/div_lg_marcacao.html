@@ -1,0 +1,4 @@
+{% for marcacao in marcacoes %}
+	<div id="{{marcacao.id}}" class="list-group-item">{{marcacao.titulo_marcacao}}<a id="btn_marc_{{marcacao.id}}" class="btn pull-right btn-default btn-xs" onclick="selecionar_marcacao('{{marcacao.id}}','{{marcacao.titulo_marcacao}}','{{marcacao.texto_marcacao}}')"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
+	</div>
+{% endfor %}

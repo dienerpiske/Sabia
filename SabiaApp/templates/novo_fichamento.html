@@ -2,17 +2,58 @@
 {% load staticfiles %}
 
 <script language=javascript>
+function clicar(){
+	var elem = document.getElementById("linkid");
+	if (typeof elem.onclick == "function") {
+   	 elem.onclick.apply(elem);
+	}
+}
 
 function testeajax(data){
 	alert(data.message);
 }
 
-function carregarmarcacoes(){
-	
+function selecionar_marcacao(id, titulo, texto){
+	document.getElementById('marc_id').value=id;
+	document.getElementById('marc_titulo').value=titulo;
+	document.getElementById('marc_texto').value=texto;
+}
+
+function carregarmarcacoes(data){
+	if(data!=Dajaxice.EXCEPTION){
+        document.getElementById('divmarcacoes').innerHTML = data.listgroup;
+    }
+    else{
+        alert('Ocorreu um erro! Favor atualizar a pagina. Obrigado ;)');
+    }
+	limpar_marcacao();
+}
+
+
+
+function limpar_marcacao(){
+	document.getElementById('marc_id').value="";
+	document.getElementById('marc_titulo').value="";
+	document.getElementById('marc_texto').value="";
+}
+
+
+function remove_marcacao(){
+	id = document.getElementById('marc_id').value;
+	if(id != ""){
+		Dajaxice.SabiaApp.removermarcacao(carregarmarcacoes,{'id':id});
+	}
 }
 
 function salva_marcacao(){
-	Dajaxice.SabiaApp.salvarmarcacao(carregarmarcacoes,{'texto':document.getElementById('artigocorpo').text
+	id = document.getElementById('marc_id').value;
+	titulo = document.getElementById('marc_titulo').value;
+	texto = document.getElementById('marc_texto').value;
+	if(id=="" && (titulo != "")){
+		Dajaxice.SabiaApp.criarmarcacao(carregarmarcacoes,{'id_fichamento':{{fichamento.id}}, 'titulo' : titulo, 'texto' : texto})
+	}else{
+		Dajaxice.SabiaApp.salvarmarcacao(carregarmarcacoes,{'id':id, 'titulo' : titulo, 'texto' : texto})
+	}
 }
 
 function mudatextoartigo(data){
@@ -59,9 +100,24 @@ var t = getMarcacao();
  
   var p = document.createElement('p');
   d.appendChild(p);
-  p.onclick=function() { marcar(t) };
+  p.onclick=function() { marcar(t,"") };
   p.setAttribute('class', 'ctxline');
-  p.innerHTML = "Marcar";
+  p.innerHTML = "Novo";
+  
+
+  var divmarc = document.getElementById("divmarcacoes").children;
+  var opcaoid = new Array();
+  for(var x = 0; x < divmarc.length; x++){
+	  opcaoid[x] = divmarc[x].id
+  }
+  for(var i = 0; i < divmarc.length; i++) {
+	  var m = document.createElement('p');
+	  d.appendChild(m);
+	  //m.onclick = function(e) { marcar(t, e.source.idd) };
+	  m.onclick = (function(opt) { marcar(t, opt) })(opcaoid[i]);
+	  m.setAttribute('class', 'ctxline');
+	  m.innerHTML = divmarc[i].textContent;
+  }
   return false;
 }
 
@@ -117,24 +173,26 @@ function getMarcacao() {
           </div>
           <div class="list-group">
             <a href="#" class="list-group-item active">Marca&ccedil;&otilde;es:</a>
-            <div class="list-group">
-            {% for marcacao in fichamento.marcacao__set.all %}
-            <div id="marcacao{{marcacao.id}}" class="list-group-item">{{marcacao.titulo_marcacao}}<a class="btn pull-right btn-default btn-xs"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
-            {% endfor %}
+            <div id="divmarcacoes" class="list-group">
+				{% for marcacao in fichamento.marcacao_set.all %}
+					<div id="{{marcacao.id}}" class="list-group-item">{{marcacao.titulo_marcacao}}<a id="btn_marc_{{marcacao.id}}" class="btn pull-right btn-default btn-xs" onclick="selecionar_marcacao('{{marcacao.id}}','{{marcacao.titulo_marcacao}}','{{marcacao.texto_marcacao}}')"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
+					</div>
+				{% endfor %}
             </div>
           </div>
           <div class="form-group">
-            <input type="hidden" id="idmarcacaosalvar" value="">
+            <input id="marc_id" type="hidden" id="idmarcacaosalvar" value="">
             <label class="control-label">Assunto</label>
             <div class="controls">
-              <input type="text" class="form-control">
+              <input id="marc_titulo" type="text" class="form-control">
             </div>
             <label class="control-label">Conteudo</label>
             <textarea id="marc_texto" class="form-control"></textarea>
             
             
-            <a class="btn btn-primary" onclick="salva_marcacao()">Adicionar</a>
+            <a class="btn btn-primary" onclick="salva_marcacao()">Salvar</a>
+            <a class="btn btn-primary" onclick="remove_marcacao()">Remover</a>
+            <a class="btn btn-primary" onclick="limpar_marcacao()">Limpar</a>
           </div>
           
       </div>

@@ -19,23 +19,27 @@ def inicio(request):
 
 @csrf_exempt 
 def home(request):
+    artigos = Artigo.objects.all()
+    fichamentos = Fichamento.objects.all()
+    return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos})
+
     #if request.user.id:
 	    #return HttpResponse("Voce ja esta logado")
     
-    if request.POST:
-        usuario = request.POST['nomeUsuario']
-        senha = request.POST['senhaUsuario']
+    #if request.POST:
+        #usuario = request.POST['nomeUsuario']
+        #senha = request.POST['senhaUsuario']
         
-        u = authenticate(username=usuario, password=senha)
+        #u = authenticate(username=usuario, password=senha)
         
-        if u is not None:
+       # if u is not None:
                         
-            artigos = Artigo.objects.all()
-            fichamentos = Fichamento.objects.all()
+            #artigos = Artigo.objects.all()
+            #fichamentos = Fichamento.objects.all()
             
-            return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos},context_instance=RequestContext(request,{}))
-        else:
-            return HttpResponse("Voce nao esta logado")
+            #return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos},context_instance=RequestContext(request,{}))
+        #else:
+            #return HttpResponse("Voce nao esta logado")
         
     #return HttpResponse("Faca login")
 def editar_fichamento(request, id_fichamento):

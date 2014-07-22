@@ -16,6 +16,6 @@ urlpatterns = patterns('',
     
     #url(r'^home/$', 'django.contrib.auth.views.login', name='home'),
     url(r'^home/$', 'django.contrib.auth.views.login', {'template_name':'SabiaApp/templates/meu_sabia.html'}),
-    # Redireciona a pagina. Ao invés de ir pro admin, vai para meu_sabia.html 
+    # Redireciona a pagina. Ao inves de ir pro admin, vai para meu_sabia.html 
     
 )
