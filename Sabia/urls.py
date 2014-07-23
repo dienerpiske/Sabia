@@ -10,7 +10,6 @@ urlpatterns = patterns('',
     (r'^sabia/', include('SabiaApp.urls')),
     (dajaxice_config.dajaxice_url, include('dajaxice.urls')),
     url(r'^admin/', include(admin.site.urls)),
-    #url(r'^accounts/profile/', include(admin.site.urls)),
     
 )
 

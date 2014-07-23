@@ -6,9 +6,10 @@ from django.views.decorators.csrf import *
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.forms import UserCreationForm # Formulario de criacao de usuarios
-from django.contrib.auth import authenticate, logout, login as authlogin 
+from django.contrib.auth import authenticate, logout, login
 from django.template import Context, loader, RequestContext
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 
 class FichamentoModelForm(ModelForm):
     class Meta:
@@ -19,29 +20,22 @@ def inicio(request):
 
 @csrf_exempt 
 def home(request):
-    artigos = Artigo.objects.all()
-    fichamentos = Fichamento.objects.all()
-    return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos})
-
-    #if request.user.id:
-	    #return HttpResponse("Voce ja esta logado")
-    
-    #if request.POST:
-        #usuario = request.POST['nomeUsuario']
-        #senha = request.POST['senhaUsuario']
+   if request.user.id:
+        artigos = Artigo.objects.all()
+        fichamentos = Fichamento.objects.all()
+        return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos})
+        #return HttpResponse(request.user.id)
         
-        #u = authenticate(username=usuario, password=senha)
+   if request.POST:       
+        usuario = authenticate(username=request.POST['nomeUsuario'], password=request.POST['senhaUsuario'])
         
-       # if u is not None:
-                        
-            #artigos = Artigo.objects.all()
-            #fichamentos = Fichamento.objects.all()
-            
-            #return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos},context_instance=RequestContext(request,{}))
-        #else:
-            #return HttpResponse("Voce nao esta logado")
+        if usuario is not None:                        
+            artigos = Artigo.objects.all()
+            fichamentos = Fichamento.objects.all()            
+            return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos},context_instance=RequestContext(request,{}))
+        else:
+            return render(request,'inicio.html')
         
-    #return HttpResponse("Faca login")
 def editar_fichamento(request, id_fichamento):
     fichamento = Fichamento.objects.get(id = id_fichamento)
     return render_to_response('novo_fichamento.html',{'fichamento' : fichamento, 'artigo' : fichamento.artigo})
@@ -94,3 +88,24 @@ def registra_novo(request):
 
 def novo_artigo(request):
     return render_to_response('novo_artigo.html')
+
+@csrf_exempt
+def cadastro_usuario(request):
+    
+    if request.POST:
+        usuario = User()
+        usuario.first_name = request.POST['primeiroNome']
+        usuario.last_name = request.POST['ultimoNome']
+        usuario.username = request.POST['nomeUsuario']
+        usuario.email = request.POST['emailUsuario']
+        usuario.set_password(request.POST['senhaUsuario'])
+        
+        usuario.save()
+    
+        return render(request,'cadastro_usuario.html',{'sucess_message' : 'OK'})
+    else:
+        return render_to_response('cadastro_usuario.html')
+
+#def logout_page(request):
+    #logout(request)
+    #return render_to_response('inicio.html')
