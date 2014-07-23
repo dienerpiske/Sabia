@@ -192,7 +192,9 @@ function getMarcacao() {
         </div>
         <div class="col-xs-6 col-lg-6">
           <div class="panel-heading jumbotron">
-            <a class="btn pull-right btn-success btn-xs" onclick="salvar_titulo_fichamento()"><i class="fa fa-thumbs-o-up">&nbsp;</i>Salvar</a><i class="fa fa-search"></i> Título&nbsp;&nbsp;: <input type="text" id="titulo_fichamento_salvar" class="form-control" value="{% if artigo %} {{fichamento.titulo_fichamento}} {% endif %}">
+            <a class="btn pull-right btn-success btn-xs" onclick="salvar_titulo_fichamento()"><i class="fa fa-thumbs-o-up">&nbsp;</i>Salvar</a><i class="fa fa-search"></i>
+            <a class="btn pull-right btn-success btn-xs" href="/sabia/fichamento/{{fichamento.id}}/"><i class="fa fa-thumbs-o-up">&nbsp;</i>Visualizar</a><i class="fa fa-search"></i>
+             Título&nbsp;&nbsp;: <input type="text" id="titulo_fichamento_salvar" class="form-control" value="{% if artigo %} {{fichamento.titulo_fichamento}} {% endif %}">
           </div>
           <div class="list-group">
             <a href="#" class="list-group-item active">Marca&ccedil;&otilde;es:</a>
