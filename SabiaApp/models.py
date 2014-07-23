@@ -34,7 +34,12 @@ class Fichamento(models.Model):
         return self.titulo_fichamento
     
     def getResumo(self):
-        return "Conteudo de :" + self.titulo_fichamento
+        marcacoes = self.marcacao_set.all()
+        resumo = "<h2>"+self.titulo_fichamento+"</h2>"
+        for m in marcacoes:
+            resumo += "<h4>"+m.titulo_marcacao+"</h3>"
+            resumo += "<h6>"+m.texto_marcacao+"</h6>"
+        return resumo
 
 class Marcacao(models.Model):
     titulo_marcacao = models.TextField()

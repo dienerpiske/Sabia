@@ -9,8 +9,16 @@ function clicar(){
 	}
 }
 
-function testeajax(data){
-	alert(data.message);
+function nada(data){
+	
+}
+
+function salvar_titulo_fichamento(){
+	tit = document.getElementById("titulo_fichamento_salvar").value;
+	if(tit != ""){
+		Dajaxice.SabiaApp.salvartitulofichamento(nada,{'id_f':{{fichamento.id}}, 'titulo_f':tit});
+	}
+	
 }
 
 function selecionar_marcacao(id, titulo, texto){
@@ -81,22 +89,25 @@ texto.value += t;
 
 function marcar(t,id){
 	var texto = document.getElementById("marc_texto");
-	var btn = document.getElementById("btn_marc_"+id);
-
-	if (typeof btn.onclick == "function") {
-		btn.onclick.apply(btn);
+	if(id==""){
+		limpar_marcacao();
+		texto.value += t;
+	} else {
+		var btn = document.getElementById("btn_marc_"+id);
+		if (typeof btn.onclick == "function") {
+			btn.onclick.apply(btn);
+		}
+		texto.value += t;
+		salva_marcacao();
 	}
-
-	texto.value += t;
-	salva_marcacao();
 }
 
 function doMarcar(){
-	marcar(getMarcacao())
+	marcar(getMarcacao());
 }
  
 function mymenu(element){
-var t = getMarcacao();
+var t = " \""+getMarcacao()+"\" ";
   var x = document.getElementById('ctxmenu1');
   if(x) x.parentNode.removeChild(x);
  
@@ -116,23 +127,23 @@ var t = getMarcacao();
   p.setAttribute('class', 'ctxline');
   p.innerHTML = "Novo";
   
-
+  
   var divmarc = document.getElementById("divmarcacoes").children;
-  var opcaoid = new Array();
-  for(var x = 0; x < divmarc.length; x++){
-	  opcaoid[x] = divmarc[x].id
-  }
   for(var i = 0; i < divmarc.length; i++) {
 	  var m = document.createElement('p');
+	  m.id = divmarc[i].id;
 	  d.appendChild(m);
-	  //m.onclick = function(e) { marcar(t, e.source.idd) };
-	  m.onclick = (function(opt) { marcar(t, opt) })(opcaoid[i]);
+	  m.onclick = function(e) { marcar(t, e.target.id) };
 	  m.setAttribute('class', 'ctxline');
 	  m.innerHTML = divmarc[i].textContent;
   }
   return false;
 }
 
+function getclick(a, b) {
+	return (function(opt) { marcar(a, opt) }(b))
+	}
+	
 function getMarcacao() {
     var text = "", containerElement = null;
     if (typeof window.getSelection != "undefined") {
@@ -164,7 +175,7 @@ function getMarcacao() {
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-xs-6 col-lg-6">
-          <div class="panel-heading">
+          <div class="panel-heading jumbotron">
           <a class="btn pull-right btn-success btn-xs" onmousedown="traduz_en_pt()"><i class="fa fa-plus-circle">&nbsp;Traduzir</i></a><a></a><i class="fa fa-search"></i>
             <a class="btn pull-right btn-success btn-xs" onmousedown="doMarcar()"><i class="fa fa-plus-circle">&nbsp;Marcar</i></a><a></a><i class="fa fa-search"></i>Título&nbsp;&nbsp;: {% if artigo %} {{artigo.titulo_artigo}} {% endif %}
           </div>
@@ -180,8 +191,10 @@ function getMarcacao() {
           </div>
         </div>
         <div class="col-xs-6 col-lg-6">
-          <div class="panel-heading">
-            <a class="btn pull-right btn-success btn-xs"><i class="fa fa-thumbs-o-up">&nbsp;</i>Salvar</a><i class="fa fa-search"></i> Título&nbsp;&nbsp;: {% if artigo %} {{artigo.titulo_artigo}} {% endif %}
+          <div class="panel-heading jumbotron">
+            <a class="btn pull-right btn-success btn-xs" onclick="salvar_titulo_fichamento()"><i class="fa fa-thumbs-o-up">&nbsp;</i>Salvar</a><i class="fa fa-search"></i>
+            <a class="btn pull-right btn-success btn-xs" href="/sabia/fichamento/{{fichamento.id}}/"><i class="fa fa-thumbs-o-up">&nbsp;</i>Visualizar</a><i class="fa fa-search"></i>
+             Título&nbsp;&nbsp;: <input type="text" id="titulo_fichamento_salvar" class="form-control" value="{% if artigo %} {{fichamento.titulo_fichamento}} {% endif %}">
           </div>
           <div class="list-group">
             <a href="#" class="list-group-item active">Marca&ccedil;&otilde;es:</a>
@@ -192,7 +205,7 @@ function getMarcacao() {
 				{% endfor %}
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group jumbotron">
             <input id="marc_id" type="hidden" id="idmarcacaosalvar" value="">
             <label class="control-label">Assunto</label>
             <div class="controls">
