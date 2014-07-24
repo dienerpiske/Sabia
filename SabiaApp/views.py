@@ -120,4 +120,4 @@ def cadastro_usuario(request):
 
 def logout_page(request):
     logout(request)
-    return render_to_response('inicio.html')
+    return HttpResponseRedirect('../inicio/')
