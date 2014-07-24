@@ -11,11 +11,12 @@
 				<p><span style="color:green">Usuário Cadastrado com Sucesso!</span></p>
 			{% endif %}
 			
-			<input type="text" class="form-control" placeholder="Primeiro Nome..." required autofocus name="primeiroNome"><br>
-			<input type="text" class="form-control" placeholder="Último Nome..." required autofocus name="ultimoNome"><br>
-			<input type="text" class="form-control" placeholder="Nome de Usuário..." required autofocus name="nomeUsuario"><br>
-			<input type="password" class="form-control" placeholder="Senha..." required autofocus name="senhaUsuario"><br>
-			<input type="email" class="form-control" placeholder="Email..." required autofocus name="emailUsuario"><br>
+			<input type="text" class="form-control" placeholder="Primeiro Nome..." required autofocus name="primeiroNome" autocomplete="off"><br>
+			<input type="text" class="form-control" placeholder="Último Nome..." required autofocus name="ultimoNome" autocomplete="off"><br>
+			<input type="text" class="form-control" placeholder="Nome de Usuário..." required autofocus name="nomeUsuario" autocomplete="off"><br>
+			<input type="password" class="form-control" placeholder="Senha..." required autofocus name="senhaUsuario" autocomplete="off"><br>
+			<input type="email" class="form-control" placeholder="Email..." required autofocus name="emailUsuario" autocomplete="off"><br>
+			<textarea class="form-control" placeholder="Fale um pouco sobre você..." rows="3" name="dadosAdicionais" autocomplete="off"></textarea></br>
 					
 			</button> <button type="submit" class="btn btn-primary">Cadastrar</button>
 		</form>

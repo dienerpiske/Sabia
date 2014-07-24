@@ -13,7 +13,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 #LOGIN_REDIRECT_URL = '/sabia/home/'
-
+LOGIN_URL = '/sabia/inicio/'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
 
@@ -134,5 +134,4 @@ USE_TZ = True
 
 
 APPEND_SLASH=False
-
 

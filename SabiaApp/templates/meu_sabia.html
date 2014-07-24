@@ -67,12 +67,21 @@
           <table class="table">
             <thead>
               <tr>
-                <th>Diener Piske</th>
+                <th>
+					{% if usuarioAuth %}
+						Olá, {{ usuarioAuth.first_name }} {{usuarioAuth.last_name}}
+					{% endif %}
+				
+				</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Mestre em Inform&aacute;tica</td>
+                <td>
+					{% if usuarioInfo %}
+						{{ usuarioInfo.informacoes_usuario }}
+					{% endif %}
+				</td>
               </tr>
               <tr>
                 <td>Lattes: <a>Clique aqui</a></td>
@@ -80,7 +89,7 @@
               </tr>
             </tbody>
           </table>
-          <p>Aqui outras informa&ccedil;&otilde;es do usu&aacute;rio...</p>
+          <p></p>
           <p style></p>
         </div>
         <div class="col-xs-4 col-lg-4">

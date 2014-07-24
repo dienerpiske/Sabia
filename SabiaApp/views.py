@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.forms import ModelForm
 from django.shortcuts import render_to_response, render
 from SabiaApp.models import *
@@ -20,21 +21,24 @@ def inicio(request):
 
 @csrf_exempt 
 def home(request):
-   if request.user.id:
-        artigos = Artigo.objects.all()
-        fichamentos = Fichamento.objects.all()
-        return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos})
-        #return HttpResponse(request.user.id)
-        
-   if request.POST:       
+    if request.POST:       
         usuario = authenticate(username=request.POST['nomeUsuario'], password=request.POST['senhaUsuario'])
         
-        if usuario is not None:                        
+        if usuario is not None:           
+            login(request, usuario)             
             artigos = Artigo.objects.all()
-            fichamentos = Fichamento.objects.all()            
-            return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos},context_instance=RequestContext(request,{}))
+            fichamentos = Fichamento.objects.all()    
+            usuario = Usuario.objects.get(user_id=request.user.id)
+            
+            return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos, 'usuarioInfo' : usuario, 'usuarioAuth' : request.user},context_instance=RequestContext(request,{}))
         else:
-            return render(request,'inicio.html')
+            return HttpResponseRedirect('../inicio/')
+            
+    else:
+        artigos = Artigo.objects.all()
+        fichamentos = Fichamento.objects.all()    
+            
+        return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos},context_instance=RequestContext(request,{}))
         
 def editar_fichamento(request, id_fichamento):
     fichamento = Fichamento.objects.get(id = id_fichamento)
@@ -42,8 +46,8 @@ def editar_fichamento(request, id_fichamento):
 
 def novo_fichamento(request, id_artigo):
     artigo = Artigo.objects.get(id=id_artigo)
-    usuario = Usuario.objects.get(id=1)
-    fichamento = Fichamento(titulo_fichamento=artigo.titulo_artigo, likes_fichamento=0, artigo = artigo, usuario = usuario)
+    #usuario = Usuario.objects.get(id=request.user.id)
+    fichamento = Fichamento(titulo_fichamento=artigo.titulo_artigo, likes_fichamento=0, artigo = artigo, usuario = request.user)
     fichamento.save()
     return render_to_response('novo_fichamento.html',{'fichamento' : fichamento, 'artigo' : fichamento.artigo})
 
@@ -63,10 +67,12 @@ def mostra_artigo(request, id_artigo):
 def salvar_questao(request):
     d = {}
     d.update(csrf(request))
+    
+    return HttpResponse(request.user.id)
     if request.POST:        
         doc = Fichamento()
         doc.titulo_topico = request.POST['formQuestao']
-        doc.usuario_id = '1'
+        doc.usuario_id = request.user.id
         doc.artigo_id = request.POST['idOculto']      
         doc.save()       
         return HttpResponseRedirect(reverse('SabiaApp.views.novo_fichamento', args=[request.POST['idOculto']]))
@@ -88,6 +94,7 @@ def registra_novo(request):
 
 def novo_artigo(request):
     return render_to_response('novo_artigo.html')
+ 
 
 @csrf_exempt
 def cadastro_usuario(request):
@@ -101,11 +108,16 @@ def cadastro_usuario(request):
         usuario.set_password(request.POST['senhaUsuario'])
         
         usuario.save()
-    
+        
+        usuarioGenerico = Usuario()
+        usuarioGenerico.user = usuario 
+        usuarioGenerico.informacoes_usuario = request.POST['dadosAdicionais']
+        usuarioGenerico.save()
+        
         return render(request,'cadastro_usuario.html',{'sucess_message' : 'OK'})
     else:
         return render_to_response('cadastro_usuario.html')
 
-#def logout_page(request):
-    #logout(request)
-    #return render_to_response('inicio.html')
+def logout_page(request):
+    logout(request)
+    return render_to_response('inicio.html')

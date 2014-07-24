@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.contrib.auth.models import User
 
 class Usuario(models.Model):
-    nome_usuario  = models.TextField()
-    email_usuario = models.CharField(max_length = 200)
-    login_usuario = models.CharField(max_length = 15)
-    senha_usuario = models.CharField(max_length = 20)
+    user = models.OneToOneField(User)
+    informacoes_usuario = models.TextField(max_length = 500)
     
     class Meta:
         db_table = 'Usuario'
@@ -24,7 +23,8 @@ class Artigo(models.Model):
 class Fichamento(models.Model):
     titulo_fichamento = models.TextField()
     likes_fichamento = models.IntegerField()
-    usuario = models.ForeignKey(Usuario)
+    usuario = models.ForeignKey(User)
+    #usuario_id = models.IntegerField()
     artigo = models.ForeignKey(Artigo)
     
     class Meta:
