@@ -1,14 +1,18 @@
+{% load staticfiles %}
 {% include "header_inicio.html"%}
 
 <div class="container">
 	<div class="jumbotron">
 
-		<form class="form-signin" role="form" method="post" action="../cadastro_usuario/">
+		<form class="form-signin" role="form" method="post" action="{% url 'cadastro_usuario' %}">
 			{% csrf_token %}
 			<h2 class="form-signin-heading">Dados</h2>
 			
 			{% if sucess_message %}
-				<p><span style="color:green">Usuário Cadastrado com Sucesso!</span></p>
+					<div class="alert alert-success" role="alert">{{sucess_message}}</div>
+			{% endif %}
+			{% if error_message %}
+					<div class="alert alert-danger" role="alert">{{error_message}}</div>
 			{% endif %}
 			
 			<input type="text" class="form-control" placeholder="Primeiro Nome..." required autofocus name="primeiroNome" autocomplete="off"><br>

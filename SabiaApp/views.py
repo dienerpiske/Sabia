@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, logout, login
 from django.template import Context, loader, RequestContext
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.db import IntegrityError
 
 class FichamentoModelForm(ModelForm):
     class Meta:
@@ -98,25 +99,33 @@ def novo_artigo(request):
 
 @csrf_exempt
 def cadastro_usuario(request):
+    sucess_message = ''
+    error_message = ''
     
-    if request.POST:
-        usuario = User()
-        usuario.first_name = request.POST['primeiroNome']
-        usuario.last_name = request.POST['ultimoNome']
-        usuario.username = request.POST['nomeUsuario']
-        usuario.email = request.POST['emailUsuario']
-        usuario.set_password(request.POST['senhaUsuario'])
-        
-        usuario.save()
-        
-        usuarioGenerico = Usuario()
-        usuarioGenerico.user = usuario 
-        usuarioGenerico.informacoes_usuario = request.POST['dadosAdicionais']
-        usuarioGenerico.save()
-        
-        return render(request,'cadastro_usuario.html',{'sucess_message' : 'OK'})
-    else:
-        return render_to_response('cadastro_usuario.html')
+    try:  
+        if request.POST:
+            usuario = User()
+            usuario.first_name = request.POST['primeiroNome']
+            usuario.last_name = request.POST['ultimoNome']
+            usuario.username = request.POST['nomeUsuario']
+            usuario.email = request.POST['emailUsuario']
+            usuario.set_password(request.POST['senhaUsuario'])
+            
+            usuario.save()
+            
+            usuarioGenerico = Usuario()
+            usuarioGenerico.user = usuario 
+            usuarioGenerico.informacoes_usuario = request.POST['dadosAdicionais']
+            usuarioGenerico.save()
+            
+            sucess_message = 'Usuário Cadastrado com Sucesso!'
+    
+    except IntegrityError:
+        error_message = 'Usuário já existe!'
+        return render(request,'cadastro_usuario.html',{'error_message' : error_message})
+      
+    return render(request,'cadastro_usuario.html',{'sucess_message' : sucess_message})
+
 
 def logout_page(request):
     logout(request)
