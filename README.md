@@ -5,8 +5,8 @@ Repositorio do Remake do Sabia, para a disciplina TCACAPA do mestrado em Informa
 
 Regras
 ====
-1. Somente commitar versões funcionais do projeto.
-2. Ao Commitar comentar informando todas as modificações e implementações realizadas.
+1. Somente commitar versï¿½es funcionais do projeto.
+2. Ao Commitar comentar informando todas as modificaï¿½ï¿½es e implementaï¿½ï¿½es realizadas.
 
 Prerequisito
 ====
@@ -16,6 +16,8 @@ $ pip install
 3. requests
 4. detectlanguages
 5. httplib2
+6. nltk.corpus
+7. nltk FreqDist
 
 
 The Package Team
