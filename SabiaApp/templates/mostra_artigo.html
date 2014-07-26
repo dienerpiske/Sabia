@@ -1,4 +1,4 @@
-{% include "header.html "%}
+{% include "header.html"%}
 {% load staticfiles %}
 
 <script language=javascript>
@@ -31,9 +31,9 @@ function traduz_en_pt(e){
           </div>
           <div style="height:400px;line-height:3em;overflow:auto;padding:5px;" id="artigocorpo" class="panel-body jumbotron" oncontextmenu="return mymenu(this)">{% if artigo %} {{artigo.texto_artigo}} {% endif %}</div>
           <div class="list-group">
-            <a href="#" class="list-group-item active">Outros Artigos</a>
-            {% for art in artigo.getArtSemelhantes %}
-            <div class="list-group-item">{{art.titulo_artigo}}<a class="btn pull-right btn-default btn-xs" href="/sabia/artigo/{{art.id}}/"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
+            <a href="#" class="list-group-item active">Titulos semelhantes</a>
+            {% for titulos in artigo.getTitulosSemelhantes %}
+            <div class="list-group-item">{{titulos.titulo_artigo}}<a class="btn pull-right btn-default btn-xs" href="/sabia/artigo/{{titulos.id}}/"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
             </div>
             {% endfor %}
             <a class="list-group-item active"></a>
@@ -47,12 +47,19 @@ function traduz_en_pt(e){
             {% if fichamento %} {{fichamento.getResumo|safe}} {% endif %}
           </div>
           <div class="list-group">
-            <a href="#" class="list-group-item active">Outros Fichamentos</a>
+            <a href="#" class="list-group-item active">Fichamentos deste artigo</a>
             {% for f in artigo.fichamento_set.all %}
             <div class="list-group-item">{{ f.titulo_fichamento }}<a class="btn pull-right btn-default btn-xs" href="/sabia/fichamento/{{ f.id }}/"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
             </div>
 			{% endfor %}
             <a class="list-group-item active"><span class="badge"></a>
+          </div>
+          <div class="list-group">
+            <a href="#" class="list-group-item active">Termos frequentes</a>
+            {% for palavras in artigo.palavrasChaves %}
+            <div class="list-group-item"> {{palavras}} </div>
+            {% endfor %}
+            <a class="list-group-item active"></a>
           </div>
         </div>
       </div>
