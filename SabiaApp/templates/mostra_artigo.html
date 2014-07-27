@@ -42,9 +42,10 @@ function traduz_en_pt(e){
         <div class="col-xs-6 col-lg-6">
           <div class="panel-body jumbotron">
           <a id="gostar" class="btn pull-right btn-success btn-xs" onclick="gostar()">Gostei - {{fichamento.likes_fichamento}}</a><i class="fa fa-search"></i>
+            {% if fichamento %}
             <a class="btn pull-right btn-success btn-xs" href="data:application/octet-stream,{{fichamento.getResumo}}"><i class="fa fa-thumbs-o-up">&nbsp;</i>Baixar</a><i class="fa fa-search"></i>
             <a class="btn pull-right btn-success btn-xs" href="/sabia/fichamento/{{fichamento.id}}/editar/"><i class="fa fa-thumbs-o-up">&nbsp;</i>Editar</a><i class="fa fa-search"></i>
-            {% if fichamento %} {{fichamento.getResumo|safe}} {% endif %}
+             {{fichamento.getResumo|safe}} {% endif %}
           </div>
           <div class="list-group">
             <a href="#" class="list-group-item active">Fichamentos deste artigo</a>
