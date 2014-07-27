@@ -53,7 +53,7 @@ class Artigo(models.Model):
         freq = FreqDist(textoArtigo)
         
         #separa as quatro palavras mais frequentes
-        items = freq.most_common(4)
+        items = freq.items(4)
         
         for i in range(0,len(items)):
             palavrasChaves.append(items[i][0].upper())
