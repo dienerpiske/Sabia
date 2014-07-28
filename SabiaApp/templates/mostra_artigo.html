@@ -2,6 +2,14 @@
 {% load staticfiles %}
 
 <script language=javascript>
+
+function downloadFichamento(text) {
+    var pom = document.createElement('a');
+    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    pom.setAttribute('download', 'fichamento.html');
+    pom.click();
+}
+
 function mostrargostei(data){
 	document.getElementById('gostar').innerHTML  = "Gostei - " + data.likes;
 }
@@ -43,7 +51,7 @@ function traduz_en_pt(e){
           <div class="panel-body jumbotron">
           {% if fichamento %}
             <a id="gostar" class="btn pull-right btn-success btn-xs" onclick="gostar()">Gostei - {{fichamento.likes_fichamento}}</a><i class="fa fa-search"></i>
-            <a class="btn pull-right btn-success btn-xs" href="data:application/octet-stream,{{fichamento.getResumo}}"><i class="fa fa-thumbs-o-up">&nbsp;</i>Baixar</a><i class="fa fa-search"></i>
+            <a class="btn pull-right btn-success btn-xs" onclick="downloadFichamento('{{fichamento.getResumo}}')"><i class="fa fa-thumbs-o-up">&nbsp;</i>Baixar</a><i class="fa fa-search"></i>
             <a class="btn pull-right btn-success btn-xs" href="/sabia/fichamento/{{fichamento.id}}/editar/"><i class="fa fa-thumbs-o-up">&nbsp;</i>Editar</a><i class="fa fa-search"></i>
              {{fichamento.getResumo|safe}} {% endif %}
           </div>
