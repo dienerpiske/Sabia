@@ -50,7 +50,8 @@ def novo_fichamento(request, id_artigo):
     #usuario = Usuario.objects.get(id=request.user.id)
     fichamento = Fichamento(titulo_fichamento=artigo.titulo_artigo, likes_fichamento=0, artigo = artigo, usuario = request.user)
     fichamento.save()
-    return render_to_response('novo_fichamento.html',{'fichamento' : fichamento, 'artigo' : fichamento.artigo})
+    return HttpResponseRedirect(reverse('SabiaApp.views.mostra_fichamento', args=[fichamento.id]))
+    
 
 def mostra_fichamento(request, id_fichamento):
     fichamento = Fichamento.objects.get(id = id_fichamento)
