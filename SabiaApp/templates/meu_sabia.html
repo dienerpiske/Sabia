@@ -67,11 +67,8 @@
           <table class="table">
             <thead>
               <tr>
-                <th>
-					{% if usuarioAuth %}
-						Olá, {{ usuarioAuth.first_name }} {{usuarioAuth.last_name}}
-					{% endif %}
-				
+                <th>	
+					Olá, {{ request.user.first_name }} {{request.user.last_name}}				
 				</th>
               </tr>
             </thead>

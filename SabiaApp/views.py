@@ -22,24 +22,26 @@ def inicio(request):
 
 @csrf_exempt 
 def home(request):
-    if request.POST:       
-        usuario = authenticate(username=request.POST['nomeUsuario'], password=request.POST['senhaUsuario'])
-        
-        if usuario is not None:           
-            login(request, usuario)             
-            artigos = Artigo.objects.all()
-            fichamentos = Fichamento.objects.all()    
-            usuario = Usuario.objects.get(user_id=request.user.id)
+    if request.user.id is None:
+        if request.POST: 
+            usuario = authenticate(username=request.POST['nomeUsuario'], password=request.POST['senhaUsuario'])
             
-            return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos, 'usuarioInfo' : usuario, 'usuarioAuth' : request.user},context_instance=RequestContext(request,{}))
-        else:
-            return HttpResponseRedirect('../inicio/')
-            
+            if usuario is not None:           
+                login(request, usuario)             
+                artigos = Artigo.objects.all()
+                fichamentos = Fichamento.objects.filter(usuario_id = request.user.id)    
+                usuario = Usuario.objects.get(user_id=request.user.id)
+                
+                return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos, 'usuarioInfo' : usuario},context_instance=RequestContext(request,{}))
+                                      
     else:
         artigos = Artigo.objects.all()
-        fichamentos = Fichamento.objects.all()    
-            
-        return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos},context_instance=RequestContext(request,{}))
+        fichamentos = Fichamento.objects.filter(usuario_id = request.user.id)    
+        usuario = Usuario.objects.get(user_id=request.user.id)
+        
+        return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos, 'usuarioInfo' : usuario},context_instance=RequestContext(request,{}))
+        
+    return HttpResponseRedirect('../inicio/')    
         
 def editar_fichamento(request, id_fichamento):
     fichamento = Fichamento.objects.get(id = id_fichamento)

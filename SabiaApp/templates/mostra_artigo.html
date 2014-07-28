@@ -5,7 +5,7 @@
 
 function downloadFichamento(text) {
     var pom = document.createElement('a');
-    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + '<meta charset="utf-8">' + encodeURIComponent(text));
     pom.setAttribute('download', 'fichamento.html');
     pom.click();
 }
