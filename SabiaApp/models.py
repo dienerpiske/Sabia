@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -63,7 +63,7 @@ class Artigo(models.Model):
         freq = FreqDist(textoArtigo)
         
         # separa as quatro palavras mais frequentes
-        items = freq.most_common(4)
+        items = freq.items()[:4]
         
         # coloca as palavras mais frequentes do texto na variavel palavrasChaves
         for i in range(0,len(items)):
