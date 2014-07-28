@@ -16,6 +16,10 @@ from django.db import IntegrityError
 class FichamentoModelForm(ModelForm):
     class Meta:
         model = Fichamento
+        
+def islogado(request):
+    if request.user.id is None:
+        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
 
 def inicio(request):  
     return render_to_response('inicio.html')
@@ -30,24 +34,30 @@ def home(request):
                 login(request, usuario)             
                 artigos = Artigo.objects.all()
                 fichamentos = Fichamento.objects.filter(usuario_id = request.user.id)    
-                usuario = Usuario.objects.get(user_id=request.user.id)
+                #usuario = Usuario.objects.get(user_id=request.user.id)
                 
-                return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos, 'usuarioInfo' : usuario},context_instance=RequestContext(request,{}))
+                return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos, 'usuarioInfo' : request.user},context_instance=RequestContext(request,{}))
                                       
     else:
         artigos = Artigo.objects.all()
         fichamentos = Fichamento.objects.filter(usuario_id = request.user.id)    
-        usuario = Usuario.objects.get(user_id=request.user.id)
+        #usuario = Usuario.objects.get(user_id=request.user.id)
         
-        return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos, 'usuarioInfo' : usuario},context_instance=RequestContext(request,{}))
+        return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos, 'usuarioInfo' : request.user},context_instance=RequestContext(request,{}))
         
     return HttpResponseRedirect('../inicio/')    
         
 def editar_fichamento(request, id_fichamento):
+    if request.user.id is None:
+        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
+    
     fichamento = Fichamento.objects.get(id = id_fichamento)
     return render_to_response('novo_fichamento.html',{'fichamento' : fichamento, 'artigo' : fichamento.artigo})
 
 def novo_fichamento(request, id_artigo):
+    if request.user.id is None:
+        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
+    
     artigo = Artigo.objects.get(id=id_artigo)
     #usuario = Usuario.objects.get(id=request.user.id)
     fichamento = Fichamento(titulo_fichamento=artigo.titulo_artigo, likes_fichamento=0, artigo = artigo, usuario = request.user)
@@ -56,19 +66,27 @@ def novo_fichamento(request, id_artigo):
     
 
 def mostra_fichamento(request, id_fichamento):
+    if request.user.id is None:
+        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
     fichamento = Fichamento.objects.get(id = id_fichamento)
     artigo = fichamento.artigo
     return mostra_artigo_fichamento(request, artigo, fichamento)
 
 def mostra_artigo_fichamento(request, artigo, fichamento):
+    if request.user.id is None:
+        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
     return render_to_response('mostra_artigo.html',{'artigo' : artigo, 'fichamento' : fichamento})
 
 def mostra_artigo(request, id_artigo):
+    if request.user.id is None:
+        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
     artigo = Artigo.objects.get(id = id_artigo)
     return render_to_response('mostra_artigo.html',{'artigo' : artigo})
 
 @csrf_exempt 
 def salvar_questao(request):
+    if request.user.id is None:
+        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
     d = {}
     d.update(csrf(request))
     
@@ -83,7 +101,9 @@ def salvar_questao(request):
     #return render_to_response('novo_fichamento.html',doc)
 
 @csrf_exempt
-def registra_novo(request):    
+def registra_novo(request):   
+    if request.user.id is None:
+        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
     art = {}
     art.update(csrf(request))
     
@@ -97,6 +117,8 @@ def registra_novo(request):
         return HttpResponseRedirect(reverse('SabiaApp.views.mostra_artigo', args=[artigo.id]))
 
 def novo_artigo(request):
+    if request.user.id is None:
+        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
     return render_to_response('novo_artigo.html')
  
 
