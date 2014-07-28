@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 #Import's necessarios
 from nltk.corpus import stopwords
 from nltk import FreqDist
-from similarity import similarity, vetores
+from SabiaApp.similarity import similarity, vetores
 
 class Usuario(models.Model):
     user = models.OneToOneField(User)
@@ -40,26 +40,36 @@ class Artigo(models.Model):
         return artigosSim
     
     def palavrasChaves(self):
-        stop = stopwords.words('english')
-#         para analisar textos em portugues, habilitar essa linha e comentar a de cima
-#         stop = stopwords.words('portuguese')
+        # função da NLTK que retorna as stopwords na lingua inglesa
+        stopE = stopwords.words('english')
+
+        # função da NLTK que retorna as stopwords na lingua portuguesa
+        stop = stopwords.words('portuguese')        
+        
         palavrasChaves = [] 
+        textoArtigo = []
         
-        #retira as stopwords do texto do artigo que está sendo apresentado
-        #retira a ',' e '.' do texto
-        textoArtigo =  [i for i in self.texto_artigo.lower().replace(',','').replace('.','').split() if i not in stop]
+        #retira pontuações do texto e divide o texto em palavras
+        for i in self.texto_artigo.lower().replace(',','').replace('.','').replace('-','').replace('(','').replace(')','').split():
+            #retira as stopwords da lingua portuguesa do texto do artigo que está sendo apresentado
+            if i not in stop:
+                #retira as stopwords da lingua inglesa do texto do artigo que está sendo apresentado
+                if i not in stopE:
+                    #ignora palavras com menos de 3 caracteres. Isso é para tratar palavras, como por exemplo o verbo "É"
+                    if len(i) > 2:
+                        textoArtigo.append(i)
         
-        #apresenta a frequencia de repetição das palavras no corpo do artigo
+        # apresenta a frequencia de repeticoes das palavras no corpo do artigo
         freq = FreqDist(textoArtigo)
         
-        #separa as quatro palavras mais frequentes
-        items = freq.items(4)
+        # separa as quatro palavras mais frequentes
+        items = freq.most_common(4)
         
+        # coloca as palavras mais frequentes do texto na variavel palavrasChaves
         for i in range(0,len(items)):
             palavrasChaves.append(items[i][0].upper())
             
-        return palavrasChaves
-        
+        return palavrasChaves        
     
 
 class Fichamento(models.Model):
