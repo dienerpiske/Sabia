@@ -2,29 +2,31 @@
 {% load staticfiles %}
 
 <script language=javascript>
+	
+	function traduz_en_pt(e){
+		alert("oi");
+		Dajaxice.SabiaApp.traduzir(mudatextoartigo,{'texto':document.getElementById('artigocorpo').textContent , 'de' : 'en', 'para' : 'pt'});
+	}
+	
+	function downloadFichamento(text) {
+	    var pom = document.createElement('a');
+	    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + '<meta charset="utf-8">' + encodeURIComponent(text));
+	    pom.setAttribute('download', 'fichamento.html');
+   		pom.click();
+	}
+	
+	function mostrargostei(data){
+		document.getElementById('gostar').innerHTML  = "Gostei - " + data.likes;
+	}
 
-function downloadFichamento(text) {
-    var pom = document.createElement('a');
-    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + '<meta charset="utf-8">' + encodeURIComponent(text));
-    pom.setAttribute('download', 'fichamento.html');
-    pom.click();
-}
 
-function mostrargostei(data){
-	document.getElementById('gostar').innerHTML  = "Gostei - " + data.likes;
-}
-
-function gostar(){
-	Dajaxice.SabiaApp.gostarfichamento(mostrargostei, {"id_f":{{fichamento.id}}});
-}
-
-function mudatextoartigo(data){
-	document.getElementById('artigocorpo').textContent  = data.texto;
-}
-
-function traduz_en_pt(e){
-	Dajaxice.SabiaApp.traduzir(mudatextoartigo,{'texto':document.getElementById('artigocorpo').textContent , 'de' : 'en', 'para' : 'pt'});
-}
+	function mudatextoartigo(data){
+		document.getElementById('artigocorpo').textContent  = data.texto;
+	}
+	
+	function gostar(){
+		Dajaxice.SabiaApp.gostarfichamento(mostrargostei, {'id_f':'{% if fichamento %} {{fichamento.id}} {% endif %}}'});
+	}
 
 </script>
 
@@ -35,7 +37,7 @@ function traduz_en_pt(e){
         <div class="col-xs-6 col-lg-6">
           <div class="panel-heading jumbotron">
           <a class="btn pull-right btn-success btn-xs" onmousedown="traduz_en_pt()"><i class="fa fa-plus-circle">&nbsp;Traduzir</i></a><a></a><i class="fa fa-search"></i>
-            <a class="btn pull-right btn-success btn-xs" href="/sabia/artigo/{{artigo.id}}/fichar/"><i class="fa fa-plus-circle"></i><font face="FontAwesome"><span style="line-height: 12px;">&nbsp;Fichar</span></font></a><a></a><i class="fa fa-search"></i> Título&nbsp;&nbsp;: {% if artigo %} {{artigo.titulo_artigo}} {% endif %}
+            <a class="btn pull-right btn-success btn-xs" href="/sabia/artigo/{{artigo.id}}/fichar/"><i class="fa fa-plus-circle"></i><font face="FontAwesome"><span style="line-height: 12px;">&nbsp;Fichar</span></font></a><a></a><i class="fa fa-search"></i> Ti'tulo&nbsp;&nbsp;: {% if artigo %} {{artigo.titulo_artigo}} {% endif %}
           </div>
           <div style="height:400px;line-height:3em;overflow:auto;padding:5px;" id="artigocorpo" class="panel-body jumbotron" oncontextmenu="return mymenu(this)">{% if artigo %} {{artigo.texto_artigo}} {% endif %}</div>
           <div class="list-group">
@@ -49,11 +51,12 @@ function traduz_en_pt(e){
         </div>
         <div class="col-xs-6 col-lg-6">
           <div class="panel-body jumbotron">
-          {% if fichamento %}
+          	{% if fichamento %}
             <a id="gostar" class="btn pull-right btn-success btn-xs" onclick="gostar()">Gostei - {{fichamento.likes_fichamento}}</a><i class="fa fa-search"></i>
             <a class="btn pull-right btn-success btn-xs" onclick="downloadFichamento('{{fichamento.getResumo}}')"><i class="fa fa-thumbs-o-up">&nbsp;</i>Baixar</a><i class="fa fa-search"></i>
             <a class="btn pull-right btn-success btn-xs" href="/sabia/fichamento/{{fichamento.id}}/editar/"><i class="fa fa-thumbs-o-up">&nbsp;</i>Editar</a><i class="fa fa-search"></i>
-             {{fichamento.getResumo|safe}} {% endif %}
+             {{fichamento.getResumo|safe}}
+             {% endif %}
           </div>
           <div class="list-group">
             <a href="#" class="list-group-item active">Fichamentos deste artigo</a>
