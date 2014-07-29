@@ -36,16 +36,16 @@ def home(request):
                 login(request, usuario)             
                 artigos = Artigo.objects.all()
                 fichamentos = Fichamento.objects.filter(usuario_id = request.user.id)    
-                #usuario = Usuario.objects.get(user_id=request.user.id)
+                usuario = Usuario.objects.get(user_id=request.user.id)
                 
-                return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos, 'usuarioInfo' : request.user},context_instance=RequestContext(request,{}))
+                return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos, 'usuarioInfo' : usuario},context_instance=RequestContext(request,{}))
                                       
     else:
         artigos = Artigo.objects.all()
         fichamentos = Fichamento.objects.filter(usuario_id = request.user.id)    
-        #usuario = Usuario.objects.get(user_id=request.user.id)
+        usuario = Usuario.objects.get(user_id=request.user.id)
         
-        return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos, 'usuarioInfo' : request.user},context_instance=RequestContext(request,{}))
+        return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos, 'usuarioInfo' : usuario},context_instance=RequestContext(request,{}))
         
     return HttpResponseRedirect('../inicio/')    
         
