@@ -44,7 +44,9 @@ class Artigo(models.Model):
         stopE = stopwords.words('english')
 
         # função da NLTK que retorna as stopwords na lingua portuguesa
-        stop = stopwords.words('portuguese')        
+        stop = stopwords.words('portuguese')  
+              
+        stopS = stopwords.words('spanish')
         
         palavrasChaves = [] 
         textoArtigo = []
@@ -56,8 +58,9 @@ class Artigo(models.Model):
                 #retira as stopwords da lingua inglesa do texto do artigo que está sendo apresentado
                 if i not in stopE:
                     #ignora palavras com menos de 3 caracteres. Isso é para tratar palavras, como por exemplo o verbo "É"
-                    if len(i) > 2:
-                        textoArtigo.append(i)
+                    if i not in stopS:
+                            if len(i) > 2:
+                                textoArtigo.append(i)
         
         # apresenta a frequencia de repeticoes das palavras no corpo do artigo
         freq = FreqDist(textoArtigo)
