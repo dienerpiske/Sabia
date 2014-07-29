@@ -44,7 +44,7 @@ def traduzir(request, texto, de, para):
     detectlanguage.configuration.api_key = "f2d7fc33a7f3cb0b045d83b6a4c36ad9"
     msg = detectlanguage.simple_detect(texto)
     client = MicrosoftTranslatorClient('sabialiedufes', 'HyJ6rFaIeEPd9q7ZjrWaixrKIUuAXuxIAroGL6YpRl8=')
-    t =  client.TranslateText(texto, msg, para)
+    t =  client.TranslateText(texto.encode('utf-8'), msg, para)
     return simplejson.dumps({'texto' : t})
 
 @dajaxice_register
