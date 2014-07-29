@@ -5,18 +5,20 @@ from SabiaApp.models import *
 from django.core.context_processors import csrf
 from django.views.decorators.csrf import *
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.contrib.auth.forms import UserCreationForm # Formulario de criacao de usuarios
 from django.contrib.auth import authenticate, logout, login
 from django.template import Context, loader, RequestContext
-from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 
 class FichamentoModelForm(ModelForm):
     class Meta:
         model = Fichamento
-        
+
+def redireciona(request):
+    return HttpResponseRedirect(reverse('SabiaApp.views.inicio')) 
+       
 def islogado(request):
     if request.user.id is None:
         return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
