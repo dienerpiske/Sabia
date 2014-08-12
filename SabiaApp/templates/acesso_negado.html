@@ -1,6 +1,9 @@
-{% load staticfiles %}
-{% include "header_inicio.html"%}
+{% extends "modelo_sabia.html" %}
+{% load staticfiles %} 
+<meta charset="utf-8" xmlns="http://www.w3.org/1999/xhtml">
 
+{% block corpo %}
+<!-- Corpo -->
 <div class="container">
 	<div class="jumbotron">
 		{% if error_message %}
@@ -13,9 +16,9 @@
 			Basta clicar em <span style="font-size: 15pt;">"Cadastrar-se" <span class="glyphicon glyphicon-hand-down"></span></span>, informar seus dados e pronto.
 		</div>
 		
-		<p><a href="../cadastro_usuario/" role="button" class="btn btn-primary btn-large">Cadastrar-se</a></p>
+		<p><a href="/sabia/cadastro_usuario/" role="button" class="btn btn-primary btn-large">Cadastrar-se</a></p>
 	</div>
 </div>
-	
-	
-{% include "footer.html "%}
+
+<!-- Fim Corpo -->
+{% endblock %}

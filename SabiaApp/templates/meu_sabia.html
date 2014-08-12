@@ -1,7 +1,11 @@
-{% include "header.html"%} 
-{% load staticfiles %}
+{% extends "modelo_sabia.html" %}
+{% load staticfiles %} 
+<meta charset="utf-8" xmlns="http://www.w3.org/1999/xhtml">
 
-    <script language=javascript>
+{% block corpo %}
+<!-- Corpo -->
+
+<script language=javascript>
     function buscarFichamento(e){
     	if (e.keyCode == 13) {
     		Dajaxice.SabiaApp.searchfichamentos(atualizaFichamentos,{'busca':document.getElementById('buscafichamentos').value});
@@ -55,79 +59,77 @@
     	alert("Fichamentos atualizados");
     }
     
-    </script>
-    
-    
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-xs-3 col-lg-4" align="center">
-          <img src="http://www.clker.com/cliparts/d/L/P/X/z/i/no-image-icon-hi.png" class="img-circle" width="150">
-          <table class="table">
-            <thead>
-              <tr>
-                <th>	
-					Olá, {{ request.user.first_name }} {{request.user.last_name}}				
-				</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-					{% if usuarioInfo %}
-						{{ usuarioInfo.informacoes_usuario }}
-					{% endif %}
-				</td>
-              </tr>
-              <tr>
-                <td>Lattes: <a>Clique aqui</a></td>
-                
-              </tr>
-            </tbody>
-          </table>
-          <p></p>
-          <p style></p>
-        </div>
-        <div class="col-xs-4 col-lg-4">
-        <input id="buscafichamentos" type="text" class="form-control" placeholder="Aperte Enter" onkeypress="buscarFichamento(event)">
-        <div id="divfichamento">
-          <div id="lgfichamento" class="list-group">
-            <a href="#" class="list-group-item active">Meus Fichamentos:</a>
-            {% for fic in fichamentos %}
-            <div id="lifichamento" class="list-group-item">{{fic.titulo_fichamento}}<a class="btn pull-right btn-default btn-xs" href="/sabia/fichamento/{{fic.id}}/"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
-            {% endfor %}
-            <a class="list-group-item active"></a>
-          </div>
-          </div>
-          
-         
-        </div>
-        
-        <div class="col-xs-5 col-lg-4">
-        <input id="buscaartigos" type="text" class="form-control" placeholder="Aperte Enter" onkeypress="buscarArtigo(event)">
-        <div id="divartigo">
-        
-          <div id="lgartigo" class="list-group">
-            <a href="#" class="list-group-item active">Artigos</a>
-           {% for art in artigos %}
-            <div id="liartigo" class="list-group-item">{{art.titulo_artigo}}<a class="btn pull-right btn-default btn-xs" href="/sabia/artigo/{{art.id}}/"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
-            </div>
-            {% endfor %}
-            <a class="list-group-item active"></a>
-          </div>
-          </div>
-        </div>
-    </div>
-    
-    
-    
-    
-    
-    
-
-	
-{% include "footer.html "%}
+</script>
 
 
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="container">
+	<!-- Example row of columns -->
+	<div class="row">
+		<div class="col-xs-3 col-lg-4" align="center">
+			<img
+				src="http://www.clker.com/cliparts/d/L/P/X/z/i/no-image-icon-hi.png"
+				class="img-circle" width="150">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Olá, {{ request.user.first_name }}
+							{{request.user.last_name}}</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{% if usuario %} {{ usuario.informacoes_usuario }} {% endif %}</td>
+					</tr>
+					<tr>
+						<td>Lattes: <a href="http://{% if usuario %} {{ usuario.lattes }} {% endif %}">Clique aqui</a></td>
+					</tr>
+				</tbody>
+			</table>
+			<p></p>
+			<p style></p>
+		</div>
+		<div class="col-xs-4 col-lg-4">
+			<input id="buscafichamentos" type="text" class="form-control"
+				placeholder="Aperte Enter" onkeypress="buscarFichamento(event)">
+			<div id="divfichamento">
+				<div id="lgfichamento" class="list-group">
+					<a href="#" class="list-group-item active">Meus Fichamentos:</a>
+					{% for fic in fichamentos %}
+					<div id="lifichamento" class="list-group-item">
+						{{fic.titulo_fichamento}}<a
+							class="btn pull-right btn-default btn-xs"
+							href="/sabia/fichamento/{{fic.id}}/"><i class="fa fa-file-o"></i><font
+							face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
+					</div>
+					{% endfor %}
+					<a class="list-group-item active"></a>
+				</div>
+			</div>
+
+
+		</div>
+
+		<div class="col-xs-5 col-lg-4">
+			<input id="buscaartigos" type="text" class="form-control"
+				placeholder="Aperte Enter" onkeypress="buscarArtigo(event)">
+			<div id="divartigo">
+
+				<div id="lgartigo" class="list-group">
+					<a href="#" class="list-group-item active">Artigos</a>
+					{% for art in artigos %}
+					<div id="liartigo" class="list-group-item">
+						{{art.titulo_artigo}}<a class="btn pull-right btn-default btn-xs"
+							href="/sabia/artigo/{{art.id}}/"><i class="fa fa-file-o"></i><font
+							face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
+					</div>
+					{% endfor %} <a class="list-group-item active"></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Fim Corpo -->
+{% endblock %}

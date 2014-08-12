@@ -1,0 +1,151 @@
+{% load staticfiles %} {% load dajaxice_templatetags %}
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8" xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Projeto QSabe">
+<meta name="author" content="Diener Maick Piske">
+<title>{% block titulo %}Sabiá - v2.0{% endblock %}</title>
+<link rel="stylesheet"
+	href="http://bootswatch.com/bower_components/bootstrap/dist/css/bootstrap.min.css">
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type="text/javascript"
+	src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+{% dajaxice_js_import %}
+<style type="text/css">
+body {
+	padding-top: 70px;
+	padding-bottom: 20px;
+}
+
+.ctxmenu {
+	position: absolute;
+	min-width: 128px;
+	height: auto;
+	padding: 8px;
+	margin: 0;
+	margin-left: 32px;
+	margin-top: -16px;
+	border: 1px solid #999;
+	background: #F8F8F8;
+	box-shadow: 2px 2px 2px #AAA;
+	z-index: 11;
+	overflow: visible;
+}
+
+.ctxline {
+	display: block;
+	margin: 0px;
+	padding: 2px 2px 2px 8px;
+	border: 1px solid #F8F8F8;
+	border-radius: 3px;
+	font-size: 13px;
+	font-family: Arial, Helvetica, sans-serif;
+	overflow: visible;
+}
+
+.ctxline:hover {
+	border: 1px solid #BBB;
+	background-color: #F0F0F0;
+	background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: -ms-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff),
+		to(#e6e6e6));
+	background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: linear-gradient(top, #ffffff, #e6e6e6);
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',
+		endColorstr='#e6e6e6', GradientType=0);
+}
+</style>
+{% block head %} {% endblock %}
+</head>
+
+<body>
+	{% block menu %}
+	<!-- Menu -->
+	<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container">
+			<div class="navbar-header" height="50">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand"><img border="0"
+					src="{% static 'img/sabia.png' %}" height="35" width="40" /></a> <a
+					class="navbar-brand" href="/sabia/"> SABIA</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li><a href="/sabia/home/">Meu Sabia</a></li>
+					<li><a href="/sabia/novo_artigo/">+Artigo</a></li>
+					<li><a id="modal-171317" href="#modal-container-171317"
+						data-toggle="modal">Sobre</a></li> {% if user.is_staff %}
+					<li><a href="/admin/">Painel de Administração</a></li> {% endif %}
+				</ul>
+				<div class="navbar-form navbar-right">
+					{% if not user.is_authenticated %}
+					<a class="btn btn-success" href="/sabia/">Entrar</a>
+					{% endif %} {% if user.is_authenticated %} Seja bem vindo
+					{{user.username}}! <a class="btn btn-success" href="/sabia/logout/">Sair</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Fim Menu -->
+	{% endblock %}
+	
+	{% block corpo %}
+	<!-- Corpo -->
+
+	<!-- Fim Corpo -->
+	{% endblock %}
+	
+	{% block sobre %}
+	<!-- Sobre -->
+	<div class="modal fade" id="modal-container-171317" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+					<h4 class="modal-title" id="myModalLabel">
+						Remake SABIA by:
+					</h4>
+				</div>
+				<div class="modal-body">									
+					<p> Diener [dienermaickpiske@gmail.com] </p>
+					<p> Enza [rafaeladenadai@gmail.com] </p>
+					<p> Sabrina [sabrinapanceri@gmail.com] </p><br>					
+					<p> Mestrandos UFES </p>
+				</div>
+				<div class="modal-footer">
+					 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button> 
+				</div>
+			</div>			
+		</div>		
+	</div>
+	<!-- Fim Sobre -->
+	{% endblock %}
+	
+	{% block rodape %}
+	<!-- Rodape -->
+	<div id="footer" class="container">
+	    <nav class="navbar navbar-inverse navbar-static-bottom">
+	        <div class="navbar-inner navbar-content-center">
+	            <br><p class="text-muted credit" align="center">&copy; 2014 - Sabiá v2.0 - Code 4Love (S2).</p>
+	        </div>
+	    </nav>
+	</div>
+	<!-- Fim Rodape -->
+	{% endblock %}
+	</div>
+</body>
+
+</html>

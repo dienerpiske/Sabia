@@ -12,7 +12,6 @@ urlpatterns = patterns('',
     (dajaxice_config.dajaxice_url, include('dajaxice.urls')),
     url(r'^admin/', include(admin.site.urls)),
     #url(r'^accounts/profile/', include(admin.site.urls)),
-    url(r'^$', 'SabiaApp.views.redireciona'),
 )
 
 urlpatterns += staticfiles_urlpatterns()

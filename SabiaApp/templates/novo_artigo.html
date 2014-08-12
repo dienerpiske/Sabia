@@ -1,5 +1,8 @@
-{% include "header.html"%}
-
+{% extends "modelo_sabia.html" %}
+{% load staticfiles %} 
+<meta charset="utf-8" xmlns="http://www.w3.org/1999/xhtml">
+{% block corpo %}
+<!-- Corpo -->
 	<div class="container">
 		<div class="row clearfix">
 			<div class="col-md-12 column">
@@ -8,7 +11,7 @@
 						{% csrf_token %}	
 						
 						<div class="panel-heading"><i class="fa fa-search"></i>  
-							Título: <input type="text" name="formTitulo" class="form-control" placeholder="Insira o Título...">
+							TÃ­tulo: <input type="text" name="formTitulo" class="form-control" placeholder="Insira o TÃ­tulo...">
 						</div>
 						
 						<div class="panel-body">						
@@ -26,7 +29,6 @@
 		</div>	
 	</div>
 			
-	
-{% include "footer.html "%}
 
-
+<!-- Fim Corpo -->
+{% endblock %}

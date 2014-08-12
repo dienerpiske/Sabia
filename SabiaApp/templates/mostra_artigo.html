@@ -1,6 +1,8 @@
-{% include "header.html"%}
-{% load staticfiles %}
-
+{% extends "modelo_sabia.html" %}
+{% load staticfiles %} 
+<meta charset="utf-8" xmlns="http://www.w3.org/1999/xhtml">
+{% block corpo %}
+<!-- Corpo -->
 <script language=javascript>
 	
 	function traduz_en_pt(e){
@@ -40,7 +42,7 @@
           </div>
           <div style="height:400px;line-height:3em;overflow:auto;padding:5px;" id="artigocorpo" class="panel-body jumbotron" oncontextmenu="return mymenu(this)">{% if artigo %} {{artigo.texto_artigo}} {% endif %}</div>
           <div class="list-group">
-            <a href="#" class="list-group-item active">Titulos semelhantes</a>
+            <a href="#" class="list-group-item active">Títulos semelhantes</a>
             {% for titulos in artigo.getTitulosSemelhantes %}
             <div class="list-group-item">{{titulos.titulo_artigo}}<a class="btn pull-right btn-default btn-xs" href="/sabia/artigo/{{titulos.id}}/"><i class="fa fa-file-o"></i><font face="FontAwesome"><span style="line-height: 15px;">&nbsp;Ver</span></font></a>
             </div>
@@ -75,8 +77,6 @@
         </div>
       </div>
     </div>
-    <!-- /container -->
-	
-{% include "footer.html "%}
 
-
+<!-- Fim Corpo -->
+{% endblock %}

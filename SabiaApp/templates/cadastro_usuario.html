@@ -1,32 +1,45 @@
-{% load staticfiles %}
-{% include "header_inicio.html"%}
-
+{% extends "modelo_sabia.html" %}
+{% load staticfiles %} 
+<meta charset="utf-8" xmlns="http://www.w3.org/1999/xhtml">
+{% block corpo %}
+<!-- Corpo -->
 <div class="container">
 	<div class="jumbotron">
 
-		<form class="form-signin" role="form" method="post" action="{% url 'cadastro_usuario' %}">
+		<form class="form-signin" role="form" method="post"
+			action="{% url 'cadastro_usuario' %}">
 			{% csrf_token %}
 			<h2 class="form-signin-heading">Dados</h2>
-			
+
 			{% if sucess_message %}
-					<div class="alert alert-success" role="alert">{{sucess_message}}</div>
-			{% endif %}
-			{% if error_message %}
-					<div class="alert alert-danger" role="alert">{{error_message}}</div>
-			{% endif %}
-			
-			<input type="text" class="form-control" placeholder="Primeiro Nome..." required autofocus name="primeiroNome" autocomplete="off"><br>
-			<input type="text" class="form-control" placeholder="Último Nome..." required autofocus name="ultimoNome" autocomplete="off"><br>
-			<input type="text" class="form-control" placeholder="Nome de Usuário..." required autofocus name="nomeUsuario" autocomplete="off"><br>
-			<input type="password" class="form-control" placeholder="Senha..." required autofocus name="senhaUsuario" autocomplete="off"><br>
-			<input type="email" class="form-control" placeholder="Email..." required autofocus name="emailUsuario" autocomplete="off"><br>
-			<textarea class="form-control" placeholder="Fale um pouco sobre você..." rows="3" name="dadosAdicionais" autocomplete="off"></textarea></br>
-					
-			</button> <button type="submit" class="btn btn-primary">Cadastrar</button>
+			<div class="alert alert-success" role="alert">{{sucess_message}}</div>
+			{% endif %} {% if error_message %}
+			<div class="alert alert-danger" role="alert">{{error_message}}</div>
+			{% endif %} <input type="text" class="form-control"
+				placeholder="Primeiro Nome..." required autofocus
+				name="primeiroNome" autocomplete="off"><br> <input
+				type="text" class="form-control" placeholder="Último Nome..."
+				required autofocus name="ultimoNome" autocomplete="off"><br>
+			<input type="text" class="form-control"
+				placeholder="Nome de Usuário..." required autofocus
+				name="nomeUsuario" autocomplete="off"><br> <input
+				type="password" class="form-control" placeholder="Senha..." required
+				autofocus name="senhaUsuario" autocomplete="off"><br> <input
+				type="email" class="form-control" placeholder="Email..." required
+				autofocus name="emailUsuario" autocomplete="off"><br>
+				<input type="text" class="form-control"
+				placeholder="Endereço Lattes..." required autofocus
+				name="lattes" autocomplete="off"><br>
+			<textarea class="form-control"
+				placeholder="Fale um pouco sobre você..." rows="3"
+				name="dadosAdicionais" autocomplete="off"></textarea>
+			</br>
+
+			</button>
+			<button type="submit" class="btn btn-primary">Cadastrar</button>
 		</form>
 	</div>
 </div>
 
-
-
-{% include "footer.html "%}
+<!-- Fim Corpo -->
+{% endblock %}

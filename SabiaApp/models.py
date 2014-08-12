@@ -1,6 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 
 #Import's necessarios
 from nltk.corpus import stopwords
@@ -8,9 +9,13 @@ from nltk import FreqDist
 from SabiaApp.similarity import similarity, vetores
 
 class Usuario(models.Model):
-    user = models.OneToOneField(User)
-    informacoes_usuario = models.TextField(max_length = 500)
-    
+    user = models.ForeignKey(User, unique=True)
+    lattes = models.CharField(max_length=100)
+    informacoes_usuario = models.TextField()
+
+    def __unicode__(self):
+        return unicode(self.user)
+
     class Meta:
         db_table = 'Usuario'
 
@@ -107,16 +112,11 @@ class Marcacao(models.Model):
     def __unicode__(self):
         return self.titulo_marcacao
 
-#class Ranking(models.Model):
-#    usuario = models.ForeignKey(Usuario)
-#    colocacao_atual = models.IntegerField()
-#    
-#    class Meta:
-#        db_table = 'Ranking'
 
-#class Similaridade(models.Model):
-#    corpus = models.TextField()
-#    
-#    class Meta:
-#        db_table = 'Similaridade'
-#
+def cria_perfil_usuario(sender, **kwargs):
+    """Cria im perfil para o usuario ao criar conta"""
+    u = kwargs["instance"]
+    if not Usuario.objects.filter(user=u):
+        Usuario(user=u).save()
+
+post_save.connect(cria_perfil_usuario, sender=User)
