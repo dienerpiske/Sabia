@@ -7,30 +7,53 @@
 	<div class="jumbotron">
 		<div class="row">
 			<div class="col-xs-8 col-lg-4">
-        	
-				{% if not user.is_authenticated %}
-					{% if form.errors %}
-			            <p>Dados incorretos. Tente novamente</p>
-			        {% endif %}
-                   	<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+        		<div id="lglogin" class="list-group">
+					<a href="#" class="list-group-item active">Artigos</a>
+					<div id="lilogin" class="list-group-item">
+						{% if not user.is_authenticated %}
+						{% if form.errors %}
+			            	<p>Dados incorretos. Tente novamente</p>
+			        	{% endif %}
+			        	<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
                    		{% csrf_token %}
-                        <div class="form-group">
-                        	{{ form.username.label_tag }}: 
-                        	{{ form.username }}
-                        </div>
-                        <div class="form-group">
-                        	{{ form.password.label_tag }}: 
-                            {{ form.password }}
-                        </div>
+						<div class="row">
+							<div class="col-xs-8 col-lg-4">
+								{{ form.username.label_tag }}
+							</div>
+							<div class="col-xs-8 col-lg-8">
+								{{ form.username }}
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-8 col-lg-4">
+								{{ form.password.label_tag }}
+							</div>
+							<div class="col-xs-8 col-lg-8">
+								{{ form.password }}
+							</div>
+						</div>
 						<input type="hidden" name="next" value="{{ next }}" />
-                        <button type="submit" class="btn btn-success">Entrar</button>
-                    </form>
-      			{% endif %}
-      			{% if user.is_authenticated %}
-      				{{user.username}}, Você já está logado. Deseja sair?<br/>
-      				<a class="btn btn-success" href="/sabia/logout/">Sair</a>
-				{% endif %}
-                    
+						<div class="row">
+							<div class="col-xs-8 col-lg-12">
+							<button type="submit" class="btn btn-success">Entrar</button>
+							</div>
+						</div>
+						{% endif %}
+      					{% if user.is_authenticated %}
+      						<div class="row">
+								<div class="col-xs-8 col-lg-12">
+									{{user.username}}, Você já está logado.
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-8 col-lg-12">
+									<a class="btn btn-success" href="/sabia/logout/">Sair</a>
+								</div>
+							</div>
+						{% endif %}
+					</div>
+					<a class="list-group-item active"></a>
+				</div>
         	</div>
 			<div class="col-xs-8 col-lg-8">
 
