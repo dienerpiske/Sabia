@@ -57,7 +57,9 @@ def editar_fichamento(request, id_fichamento):
         return HttpResponseRedirect(reverse('SabiaApp.views.acesso_negado'))  
     
     fichamento = Fichamento.objects.get(id = id_fichamento)
-    return render_to_response('novo_fichamento.html',{'fichamento' : fichamento, 'artigo' : fichamento.artigo})
+    if request.user.id == fichamento.usuario.id:
+        return render_to_response('novo_fichamento.html',{'fichamento' : fichamento, 'artigo' : fichamento.artigo})
+    return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
 
 def novo_fichamento(request, id_artigo):
     if request.user.id is None:
