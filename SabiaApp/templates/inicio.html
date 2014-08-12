@@ -6,9 +6,46 @@
 <div class="container">
 	<div class="jumbotron">
 		<div class="row">
-			<div class="col-xs-8 col-lg-4">
+			
+			<div class="col-xs-8 col-lg-12">
+
+				<center>
+					<img border="0" src="{% static 'img/sabia.png' %}" />
+				</center>
+				<p>O sistema proposto é um ambiente cooperativo multiagentes
+					que auxilia na tarefa de pesquisar artigos relevantes, realizar a
+					leitura, destacar trechos importantes e anotar percepcões
+					importantes, isto é, fazer o trabalho de fichamento de diversos
+					artigos de pesquisa.</p>
+				<p>
+					<a href="/sabia/cadastro_usuario/" role="button"
+						class="btn btn-primary btn-large">Cadastrar-se</a>
+						
+						<a id="modal-171312" href="#modal-container-171312"
+						data-toggle="modal" role="button" class="btn btn-primary btn-large">
+						Fazer Login </a>
+				</p>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<!-- Login -->
+	<div class="modal fade" id="modal-container-171312" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+					<h4 class="modal-title" id="myModalLabel">
+						Deseja entrar no ninho de conhecimento do Sabiá?
+					</h4>
+				</div>
+				<div class="modal-body">									
+					<div class="col-xs-8 col-lg-12">
         		<div id="lglogin" class="list-group">
-					<a href="#" class="list-group-item active">Seja bem vindo!!</a>
+					<a href="#" class="list-group-item active"></a>
 					<div id="lilogin" class="list-group-item">
 						{% if not user.is_authenticated %}
 							{% if form.errors %}
@@ -56,25 +93,15 @@
 					<a class="list-group-item active"></a>
 				</div>
         	</div>
-			<div class="col-xs-8 col-lg-8">
-
-				<center>
-					<img border="0" src="{% static 'img/sabia.png' %}" />
-				</center>
-				<p>O sistema proposto é um ambiente cooperativo multiagentes
-					que auxilia na tarefa de pesquisar artigos relevantes, realizar a
-					leitura, destacar trechos importantes e anotar percepcões
-					importantes, isto é, fazer o trabalho de fichamento de diversos
-					artigos de pesquisa.</p>
-				<p>
-					<a href="/sabia/cadastro_usuario/" role="button"
-						class="btn btn-primary btn-large">Cadastrar-se</a>
-				</p>
-			</div>
-		</div>
+				</div>
+				<div class="modal-footer">
+					 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button> 
+				</div>
+			</div>			
+		</div>		
 	</div>
+	<!-- Fim Login -->
 
-</div>
 
 <!-- Fim Corpo -->
 {% endblock %}
