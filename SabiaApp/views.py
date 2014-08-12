@@ -81,11 +81,11 @@ def registra_novo(request):
         artigo.tags_artigo = request.POST['formTags']          
         artigo.save()       
             
-        return HttpResponseRedirect(reverse('SabiaApp.views.mostra_artigo', args=[artigo.id]))
+        return HttpResponseRedirect(reverse('SabiaApp.views.mostra_artigo', args=[artigo.id]),{'user' : request.user})
 
 @login_required()
 def novo_artigo(request):
-    return render_to_response('novo_artigo.html')
+    return render_to_response('novo_artigo.html', {'user' : request.user})
  
 @csrf_exempt
 def cadastro_usuario(request):
@@ -109,12 +109,12 @@ def cadastro_usuario(request):
     
     except IntegrityError:
         error_message = 'Usuário já existe!'
-        return render(request,'cadastro_usuario.html',{'error_message' : error_message})
+        return render(request,'cadastro_usuario.html',{'error_message' : error_message, 'user' : request.user})
       
-    return render(request,'cadastro_usuario.html',{'sucess_message' : sucess_message})
+    return render(request,'cadastro_usuario.html',{'sucess_message' : sucess_message, 'user' : request.user})
 
 def acessoNegado(request):
-    return render_to_response("acesso_negado.html")
+    return render_to_response("acesso_negado.html", {'user' : request.user})
 
 def doLogout(request):
     logout(request)
