@@ -1,4 +1,4 @@
-{% extends "modelo_sabia.html" %}
+﻿{% extends "modelo_sabia.html" %}
 {% load staticfiles %} 
 <meta charset="utf-8" xmlns="http://www.w3.org/1999/xhtml">
 
@@ -82,7 +82,7 @@
 						<td>{% if usuario %} {{ usuario.informacoes_usuario }} {% endif %}</td>
 					</tr>
 					<tr>
-						<td>Lattes: <a href="http://{% if usuario %} {{ usuario.lattes }} {% endif %}">Clique aqui</a></td>
+						<td>Lattes: <a href="http://{% if usuario %}{{ usuario.lattes }}{% endif %}">Clique aqui</a></td>
 					</tr>
 				</tbody>
 			</table>
