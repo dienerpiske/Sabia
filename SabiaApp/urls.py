@@ -16,7 +16,9 @@ urlpatterns = patterns('',
     url(r'^fichamento/(?P<id_fichamento>\d+)/$', 'SabiaApp.views.mostra_fichamento', name='mostra_fichamento'),
     url(r'^artigo/(?P<id_artigo>\d+)/$', 'SabiaApp.views.mostra_artigo', name='mostra_artigo'),
     url(r'^cadastro_usuario/$', 'SabiaApp.views.cadastro_usuario', name='cadastro_usuario'),
-        
+    url(r'^acesso_negado/$', 'SabiaApp.views.acesso_negado', name='acesso_negado'),
+    url(r'^login_page/$', 'SabiaApp.views.login_page', name='login_page'),
+       
     #url(r'^home/$', 'django.contrib.auth.views.login', name='home'),
     url(r'^home/$', 'django.contrib.auth.views.login', {'template_name':'SabiaApp/templates/meu_sabia.html'}),
     # Redireciona a pagina. Ao inves de ir pro admin, vai para meu_sabia.html 

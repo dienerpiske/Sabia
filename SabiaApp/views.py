@@ -46,19 +46,22 @@ def home(request):
         usuario = Usuario.objects.get(user_id=request.user.id)
         
         return render_to_response('meu_sabia.html',{'artigos' : artigos, 'fichamentos' : fichamentos, 'usuarioInfo' : usuario},context_instance=RequestContext(request,{}))
-        
-    return HttpResponseRedirect('../inicio/')    
+    
+    return HttpResponseRedirect(reverse('SabiaApp.views.acesso_negado'))   
+
+def acesso_negado(request):
+    return render_to_response('acesso_negado.html')
         
 def editar_fichamento(request, id_fichamento):
     if request.user.id is None:
-        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
+        return HttpResponseRedirect(reverse('SabiaApp.views.acesso_negado'))  
     
     fichamento = Fichamento.objects.get(id = id_fichamento)
     return render_to_response('novo_fichamento.html',{'fichamento' : fichamento, 'artigo' : fichamento.artigo})
 
 def novo_fichamento(request, id_artigo):
     if request.user.id is None:
-        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
+        return HttpResponseRedirect(reverse('SabiaApp.views.acesso_negado'))  
     
     artigo = Artigo.objects.get(id=id_artigo)
     #usuario = Usuario.objects.get(id=request.user.id)
@@ -69,26 +72,26 @@ def novo_fichamento(request, id_artigo):
 
 def mostra_fichamento(request, id_fichamento):
     if request.user.id is None:
-        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
+        return HttpResponseRedirect(reverse('SabiaApp.views.acesso_negado'))  
     fichamento = Fichamento.objects.get(id = id_fichamento)
     artigo = fichamento.artigo
     return mostra_artigo_fichamento(request, artigo, fichamento)
 
 def mostra_artigo_fichamento(request, artigo, fichamento):
     if request.user.id is None:
-        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
+        return HttpResponseRedirect(reverse('SabiaApp.views.acesso_negado'))  
     return render_to_response('mostra_artigo.html',{'artigo' : artigo, 'fichamento' : fichamento})
 
 def mostra_artigo(request, id_artigo):
     if request.user.id is None:
-        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
+        return HttpResponseRedirect(reverse('SabiaApp.views.acesso_negado'))  
     artigo = Artigo.objects.get(id = id_artigo)
     return render_to_response('mostra_artigo.html',{'artigo' : artigo})
 
 @csrf_exempt 
 def salvar_questao(request):
     if request.user.id is None:
-        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
+       return HttpResponseRedirect(reverse('SabiaApp.views.acesso_negado'))  
     d = {}
     d.update(csrf(request))
     
@@ -105,7 +108,7 @@ def salvar_questao(request):
 @csrf_exempt
 def registra_novo(request):   
     if request.user.id is None:
-        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
+        return HttpResponseRedirect(reverse('SabiaApp.views.acesso_negado'))  
     art = {}
     art.update(csrf(request))
     
@@ -120,7 +123,7 @@ def registra_novo(request):
 
 def novo_artigo(request):
     if request.user.id is None:
-        return HttpResponseRedirect(reverse('SabiaApp.views.inicio'))
+        return HttpResponseRedirect(reverse('SabiaApp.views.acesso_negado'))  
     return render_to_response('novo_artigo.html')
  
 
@@ -157,3 +160,6 @@ def cadastro_usuario(request):
 def logout_page(request):
     logout(request)
     return HttpResponseRedirect('../inicio/')
+
+def login_page(request):
+    return render_to_response('login.html')

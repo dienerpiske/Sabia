@@ -1,0 +1,19 @@
+{% load staticfiles %}
+{% include "header_inicio.html"%}
+
+<div class="container">
+	<div class="jumbotron">
+		<form class="form-signin" role="form" method="post" action="{% url 'django.contrib.auth.views.login' %}">
+		{% csrf_token %}
+			<h2 class="form-signin-heading">Acessar Sistema</h2>
+			<input type="login" class="form-control" placeholder="Username" name="nomeUsuario" required autofocus autocomplete="off"><br>
+			<input type="password" class="form-control" placeholder="Password" name="senhaUsuario" required>		
+			
+			<br>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button> <button type="submit" class="btn btn-primary">Entrar</button>
+			
+		</form>
+	</div>
+</div>
+		
+{% include "footer.html "%}
